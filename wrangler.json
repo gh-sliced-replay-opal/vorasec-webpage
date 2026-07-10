@@ -1,14 +1,24 @@
 {
-	"name": "vorasec-webpage",
-	"compatibility_date": "2025-10-08",
-	"compatibility_flags": ["nodejs_compat"],
-	"main": "./dist/_worker.js/index.js",
-	"assets": {
-		"directory": "./dist",
-		"binding": "ASSETS"
-	},
-	"observability": {
-		"enabled": true
-	},
-	"upload_source_maps": true
+  "name": "project-webpage",
+  "compatibility_date": "2025-10-08",
+  "compatibility_flags": ["nodejs_compat"],
+  "main": "./dist/_worker.js/index.js",
+
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS"
+  },
+
+  "r2_buckets": [
+    {
+      "binding": "BRIEFINGS_BUCKET",
+      "bucket_name": "n8n-cybernews"
+    }
+  ],
+
+  "observability": {
+    "enabled": true
+  },
+
+  "upload_source_maps": true
 }
