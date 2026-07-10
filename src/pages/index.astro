@@ -4,6 +4,7 @@ const areas=[['Security Operations','SOC operations, incident response, threat a
 ---
 <BaseLayout title="David | Cybersecurity, Technology & AI">
 <section class="hero shell"><p class="eyebrow">Cybersecurity · Technology · Automation</p><h1>I build practical systems that turn information into action.</h1><p>I’m David, a military veteran and cybersecurity professional focused on security operations, incident response, automation, and applied AI.</p><div class="buttons"><a class="button primary" href="/about">About me</a><a class="button" href="/podcast">Listen to the podcast</a></div></section>
-<section class="section shell"><p class="eyebrow">What I work on</p><h2>Security with an operator’s perspective.</h2><div class="grid">{areas.map(([title,text])=><article class="card"><h3>{title}</h3><p>{text}</p></article>)}</div></section>
-<section class="section shell"><div class="card"><p class="eyebrow">Current project</p><h2>AI-powered cyber briefings</h2><p>An automated pipeline that collects trusted reporting, prioritizes exploited vulnerabilities, and delivers a concise audio briefing.</p><a class="button" href="/podcast">Explore the project</a></div></section>
+<section class="section shell"><p class="eyebrow">What I work on</p><h2>Security with an operator’s perspective.</h2><div class="grid">{areas.map(([title,text])=><article><h3>{title}</h3><p>{text}</p></article>)}</div></section>
+<section class="section shell project"><p class="eyebrow">Current project</p><h2>AI-powered cyber briefings</h2><p>An automated pipeline that collects trusted reporting, prioritizes exploited vulnerabilities, and delivers a concise audio briefing.</p><a class="button" href="/podcast">Explore the project</a></section>
 </BaseLayout>
+<style>.project{max-width:760px;margin-left:max(1.25rem,calc((100vw - var(--max))/2))}</style>
