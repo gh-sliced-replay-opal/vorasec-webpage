@@ -11,8 +11,8 @@ export type EpisodeFile = {
   size: number;
 };
 
-const AUDIO_RE = /^briefings\/briefing_(\d{4}-\d{2}-\d{2})\.mp3$/;
-const NOTES_RE = /^briefings\/shownotes_(\d{4}-\d{2}-\d{2})\.md$/;
+const AUDIO_RE = /^briefing_(\d{4}-\d{2}-\d{2})\.mp3$/;
+const NOTES_RE = /^shownotes_(\d{4}-\d{2}-\d{2})\.md$/;
 
 export function pairEpisodes(objects: R2Object[]): EpisodeFile[] {
   const notesByDate = new Map<string, string>();
