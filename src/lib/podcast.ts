@@ -1,5 +1,4 @@
-export const MEDIA_BASE_URL = 'https://briefing.vorasec.com/podcast
-  ';
+export const MEDIA_BASE_URL = 'https://briefing.vorasec.com';
 export const EPISODES_PER_PAGE = 12;
 
 export type EpisodeFile = {
@@ -14,11 +13,16 @@ export type EpisodeFile = {
 const AUDIO_RE = /^briefing_(\d{4}-\d{2}-\d{2})\.mp3$/;
 const NOTES_RE = /^shownotes_(\d{4}-\d{2}-\d{2})\.md$/;
 
+function getFileName(objectKey: string): string {
+  return objectKey.split('/').pop() ?? objectKey;
+}
+
 export function pairEpisodes(objects: R2Object[]): EpisodeFile[] {
   const notesByDate = new Map<string, string>();
 
   for (const object of objects) {
-    const match = object.key.match(NOTES_RE);
+    const fileName = getFileName(object.key);
+    const match = fileName.match(NOTES_RE);
 
     if (match) {
       notesByDate.set(match[1], object.key);
@@ -27,7 +31,8 @@ export function pairEpisodes(objects: R2Object[]): EpisodeFile[] {
 
   return objects
     .flatMap((object) => {
-      const match = object.key.match(AUDIO_RE);
+      const fileName = getFileName(object.key);
+      const match = fileName.match(AUDIO_RE);
 
       if (!match) return [];
 
@@ -76,11 +81,13 @@ function decodeEntities(value: string): string {
     .replace(/&#39;|&apos;/gi, "'")
     .replace(
       /&#x([0-9a-f]+);/gi,
-      (_, hex) => String.fromCodePoint(Number.parseInt(hex, 16)),
+      (_, hex) =>
+        String.fromCodePoint(Number.parseInt(hex, 16)),
     )
     .replace(
       /&#(\d+);/g,
-      (_, decimal) => String.fromCodePoint(Number.parseInt(decimal, 10)),
+      (_, decimal) =>
+        String.fromCodePoint(Number.parseInt(decimal, 10)),
     );
 }
 
@@ -97,7 +104,8 @@ function safeUrl(value: string): string | null {
   try {
     const url = new URL(value.trim());
 
-    return url.protocol === 'https:' || url.protocol === 'http:'
+    return url.protocol === 'https:' ||
+      url.protocol === 'http:'
       ? url.href
       : null;
   } catch {
@@ -146,7 +154,10 @@ export function renderShowNotes(markdown: string): string {
       closeParagraph();
       closeList();
 
-      const level = Math.min(heading[1].length + 1, 4);
+      const level = Math.min(
+        heading[1].length + 1,
+        4,
+      );
 
       output.push(
         `<h${level}>${escapeHtml(heading[2])}</h${level}>`,
@@ -155,7 +166,9 @@ export function renderShowNotes(markdown: string): string {
       continue;
     }
 
-    const bullet = line.match(/^[-*]\s+(.+?)(?:\s+—\s*)?$/);
+    const bullet = line.match(
+      /^[-*]\s+(.+?)(?:\s+—\s*)?$/,
+    );
 
     if (bullet) {
       closeParagraph();
@@ -169,7 +182,9 @@ export function renderShowNotes(markdown: string): string {
         .replace(/\s+—\s*$/, '')
         .trim();
 
-      const nextLine = lines[index + 1]?.trim() ?? '';
+      const nextLine =
+        lines[index + 1]?.trim() ?? '';
+
       const url = safeUrl(nextLine);
 
       if (url) {
