@@ -30,8 +30,8 @@ async function listAllObjects(bucket: R2Bucket): Promise<R2Object[]> {
   do {
     const result = await bucket.list({
       cursor,
-      limit: 1000,
-    });
+  prefix: 'briefings/',
+  });
 
     objects.push(...result.objects);
     cursor = result.truncated ? result.cursor : undefined;
