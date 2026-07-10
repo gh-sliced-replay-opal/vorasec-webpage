@@ -1,0 +1,36 @@
+---
+const { title, description = 'Cybersecurity, technology, and AI-powered security briefings.' } = Astro.props;
+const path = Astro.url.pathname;
+const nav = [
+  ['/', 'Home'],
+  ['/about', 'About'],
+  ['/blog', 'Blog'],
+  ['/podcast', 'AI Podcast'],
+];
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content={description} />
+  <meta name="theme-color" content="#08111f" />
+  <link rel="icon" href="/favicon.svg" />
+  <title>{title}</title>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header>
+    <div class="shell bar">
+      <a class="brand" href="/"><span>D</span>David.</a>
+      <nav aria-label="Primary navigation"><ul>{nav.map(([href,label]) => <li><a class:list={{active: href === '/' ? path === '/' : path.startsWith(href)}} href={href}>{label}</a></li>)}</ul></nav>
+    </div>
+  </header>
+  <main id="main"><slot /></main>
+  <footer><div class="shell foot"><p>© {new Date().getFullYear()} David. Built with Astro on Cloudflare.</p><p><a href="/blog">Writing</a> · <a href="/podcast">Podcast</a></p></div></footer>
+</body>
+</html>
+<style is:global>
+:root{color-scheme:dark;--bg:#08111f;--panel:#102038;--text:#eef4ff;--muted:#a9b8cd;--line:rgba(255,255,255,.12);--a:#56d6ff;--b:#8ef0c0;--max:1120px}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 80% 10%,rgba(40,140,190,.18),transparent 34rem),var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,sans-serif;line-height:1.65}.shell{width:min(calc(100% - 2rem),var(--max));margin:auto}a{color:inherit}.skip{position:absolute;top:-5rem}.skip:focus{top:1rem}header{position:sticky;top:0;z-index:10;background:rgba(8,17,31,.82);backdrop-filter:blur(18px);border-bottom:1px solid var(--line)}.bar{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:1rem}.brand{display:flex;align-items:center;gap:.6rem;text-decoration:none;font-weight:850}.brand span{display:grid;place-items:center;width:2rem;height:2rem;border-radius:.6rem;color:#03121b;background:linear-gradient(135deg,var(--a),var(--b))}nav ul{display:flex;gap:.3rem;list-style:none;margin:0;padding:0}nav a{display:block;padding:.5rem .7rem;border-radius:.65rem;text-decoration:none;color:var(--muted)}nav a:hover,nav a.active{background:rgba(255,255,255,.07);color:var(--text)}h1,h2,h3{line-height:1.12;letter-spacing:-.035em}h1{font-size:clamp(2.8rem,7vw,5.7rem);margin:.2rem 0}h2{font-size:clamp(2rem,4vw,3rem)}p{color:var(--muted)}.eyebrow{color:var(--b);text-transform:uppercase;letter-spacing:.14em;font-weight:800;font-size:.78rem}.hero{padding:7rem 0 5rem}.hero p{max-width:760px;font-size:1.17rem}.section{padding:4rem 0}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}.card{padding:1.5rem;border:1px solid var(--line);border-radius:20px;background:rgba(16,32,56,.8);box-shadow:0 24px 70px rgba(0,0,0,.25)}.tags{display:flex;flex-wrap:wrap;gap:.5rem;list-style:none;padding:0}.tags li{padding:.35rem .65rem;border:1px solid var(--line);border-radius:999px;color:var(--muted)}.buttons{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:2rem}.button{display:inline-flex;padding:.75rem 1rem;border:1px solid var(--line);border-radius:.75rem;text-decoration:none;font-weight:800}.primary{background:linear-gradient(135deg,var(--a),var(--b));color:#04121b;border:0}.prose{width:min(calc(100% - 2rem),780px);margin:auto;padding:5rem 0}.prose h1{font-size:clamp(2.5rem,6vw,4.5rem)}.prose p,.prose li{color:#c1ccdc}.prose a{color:var(--a)}footer{margin-top:4rem;border-top:1px solid var(--line)}.foot{min-height:105px;display:flex;justify-content:space-between;align-items:center;gap:1rem}@media(max-width:760px){.bar{align-items:flex-start;flex-direction:column;padding:.8rem 0}nav{width:100%;overflow:auto}nav ul{width:max-content}.grid{grid-template-columns:1fr}.hero{padding-top:4rem}.foot{align-items:flex-start;flex-direction:column;padding:2rem 0}}
+</style>
