@@ -3,25 +3,15 @@ import { env } from 'cloudflare:workers';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import {
   EPISODES_PER_PAGE,
+  episodeTitle,
+  pairEpisodes,
   publicObjectUrl,
   renderShowNotes,
 } from '../lib/podcast';
 
 export const prerender = false;
 
-Astro.response.headers.set(
-  'Cache-Control',
-  'public, max-age=60, s-maxage=300'
-);
-
-type Episode = {
-  id: string;
-  dateKey: string;
-  timeKey?: string;
-  audioKey: string;
-  notesKey?: string;
-  notesHtml?: string;
-};
+Astro.response.headers.set('Cache-Control', 'no-store');
 
 async function listAllObjects(bucket: R2Bucket): Promise<R2Object[]> {
   const objects: R2Object[] = [];
@@ -30,9 +20,9 @@ async function listAllObjects(bucket: R2Bucket): Promise<R2Object[]> {
   do {
     const result = await bucket.list({
       cursor,
-  prefix: 'briefings/',
-  });
-
+      limit: 1000,
+      prefix: 'briefings/',
+    });
     objects.push(...result.objects);
     cursor = result.truncated ? result.cursor : undefined;
   } while (cursor);
@@ -40,156 +30,33 @@ async function listAllObjects(bucket: R2Bucket): Promise<R2Object[]> {
   return objects;
 }
 
-function parseFilename(
-  key: string,
-  type: 'briefing' | 'shownotes'
-): {
-  id: string;
-  dateKey: string;
-  timeKey?: string;
-} | null {
-  const extension = type === 'briefing' ? 'mp3' : 'md';
-
-  const pattern = new RegExp(
-    `^${type}_(\\d{4}-\\d{2}-\\d{2})(?:_(\\d{4}))?\\.${extension}$`
-  );
-
-  const match = key.match(pattern);
-
-  if (!match) return null;
-
-  const dateKey = match[1];
-  const timeKey = match[2];
-
-  return {
-    id: timeKey ? `${dateKey}_${timeKey}` : dateKey,
-    dateKey,
-    timeKey,
-  };
-}
-
-function pairEpisodes(objects: R2Object[]): Episode[] {
-  const audioFiles = new Map<
-    string,
-    {
-      dateKey: string;
-      timeKey?: string;
-      key: string;
-    }
-  >();
-
-  const notesFiles = new Map<string, string>();
-
-  for (const object of objects) {
-    const audio = parseFilename(object.key, 'briefing');
-
-    if (audio) {
-      audioFiles.set(audio.id, {
-        dateKey: audio.dateKey,
-        timeKey: audio.timeKey,
-        key: object.key,
-      });
-
-      continue;
-    }
-
-    const notes = parseFilename(object.key, 'shownotes');
-
-    if (notes) {
-      notesFiles.set(notes.id, object.key);
-    }
-  }
-
-  return [...audioFiles.entries()]
-    .map(([id, audio]) => ({
-      id,
-      dateKey: audio.dateKey,
-      timeKey: audio.timeKey,
-      audioKey: audio.key,
-      notesKey: notesFiles.get(id),
-    }))
-    .sort((a, b) => b.id.localeCompare(a.id));
-}
-
-function episodeTitle(dateKey: string): string {
-  const date = new Date(`${dateKey}T12:00:00`);
-
-  return date.toLocaleDateString('en-US', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-}
-
-function episodeTime(timeKey?: string): string | null {
-  if (!timeKey) return null;
-
-  const hour = Number.parseInt(timeKey.slice(0, 2), 10);
-  const minute = timeKey.slice(2, 4);
-
-  const suffix = hour >= 12 ? 'PM' : 'AM';
-  const displayHour = hour % 12 || 12;
-
-  return `${displayHour}:${minute} ${suffix}`;
-}
-
-const requestedPage = Number.parseInt(
-  Astro.url.searchParams.get('page') ?? '1',
-  10
-);
-
-const currentPage =
-  Number.isFinite(requestedPage) && requestedPage > 0
-    ? requestedPage
-    : 1;
+const requestedPage = Number.parseInt(Astro.url.searchParams.get('page') ?? '1', 10);
+const currentPage = Number.isFinite(requestedPage) && requestedPage > 0 ? requestedPage : 1;
 
 let loadError = '';
-let episodes: Episode[] = [];
+let episodes = [] as Array<ReturnType<typeof pairEpisodes>[number] & { notesHtml?: string }>;
 let totalEpisodes = 0;
 
 try {
   const allObjects = await listAllObjects(env.BRIEFINGS_BUCKET);
   const paired = pairEpisodes(allObjects);
-
   totalEpisodes = paired.length;
 
   const start = (currentPage - 1) * EPISODES_PER_PAGE;
-  const pageItems = paired.slice(
-    start,
-    start + EPISODES_PER_PAGE
-  );
+  const pageItems = paired.slice(start, start + EPISODES_PER_PAGE);
 
-  episodes = await Promise.all(
-    pageItems.map(async (episode) => {
-      if (!episode.notesKey) return episode;
-
-      const notesObject =
-        await env.BRIEFINGS_BUCKET.get(episode.notesKey);
-
-      if (!notesObject) return episode;
-
-      return {
-        ...episode,
-        notesHtml: renderShowNotes(
-          await notesObject.text()
-        ),
-      };
-    })
-  );
+  episodes = await Promise.all(pageItems.map(async (episode) => {
+    if (!episode.notesKey) return episode;
+    const notesObject = await env.BRIEFINGS_BUCKET.get(episode.notesKey);
+    if (!notesObject) return episode;
+    return { ...episode, notesHtml: renderShowNotes(await notesObject.text()) };
+  }));
 } catch (error) {
-  console.error(
-    'Unable to load podcast episodes from R2',
-    error
-  );
-
-  loadError =
-    'The episode archive is temporarily unavailable.';
+  console.error('Unable to load podcast episodes from R2', error);
+  loadError = 'The episode archive is temporarily unavailable.';
 }
 
-const totalPages = Math.max(
-  1,
-  Math.ceil(totalEpisodes / EPISODES_PER_PAGE)
-);
+const totalPages = Math.max(1, Math.ceil(totalEpisodes / EPISODES_PER_PAGE));
 ---
 
 <BaseLayout
@@ -228,19 +95,13 @@ const totalPages = Math.max(
     )}
 
     <div class="episode-list">
-      {episodes.map((episode) => {
-        const time = episodeTime(episode.timeKey);
-
-        return (
+      {episodes.map((episode) => (
           <article class="episode">
             <div class="episode-heading">
               <div>
                 <h3>{episodeTitle(episode.dateKey)}</h3>
 
-                <p>
-                  {time ? `${time} · ` : ''}
-                  AI-powered cyber briefing
-                </p>
+                <p>AI-powered cyber briefing</p>
               </div>
 
               <a
@@ -275,8 +136,7 @@ const totalPages = Math.max(
               </p>
             )}
           </article>
-        );
-      })}
+      ))}
     </div>
 
     {totalPages > 1 && (

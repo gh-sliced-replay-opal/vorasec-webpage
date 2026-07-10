@@ -1,4 +1,3 @@
-export const MEDIA_BASE_URL = 'https://briefing.vorasec.com';
 export const EPISODES_PER_PAGE = 12;
 
 export type EpisodeFile = {
@@ -21,40 +20,30 @@ export function pairEpisodes(objects: R2Object[]): EpisodeFile[] {
   const notesByDate = new Map<string, string>();
 
   for (const object of objects) {
-    const fileName = getFileName(object.key);
-    const match = fileName.match(NOTES_RE);
-
-    if (match) {
-      notesByDate.set(match[1], object.key);
-    }
+    const match = getFileName(object.key).match(NOTES_RE);
+    if (match) notesByDate.set(match[1], object.key);
   }
 
   return objects
     .flatMap((object) => {
-      const fileName = getFileName(object.key);
-      const match = fileName.match(AUDIO_RE);
-
+      const match = getFileName(object.key).match(AUDIO_RE);
       if (!match) return [];
 
       const dateKey = match[1];
-
-      return [
-        {
-          id: dateKey,
-          dateKey,
-          audioKey: object.key,
-          notesKey: notesByDate.get(dateKey),
-          uploaded: object.uploaded,
-          size: object.size,
-        } satisfies EpisodeFile,
-      ];
+      return [{
+        id: dateKey,
+        dateKey,
+        audioKey: object.key,
+        notesKey: notesByDate.get(dateKey),
+        uploaded: object.uploaded,
+        size: object.size,
+      } satisfies EpisodeFile];
     })
     .sort((a, b) => b.id.localeCompare(a.id));
 }
 
 export function episodeTitle(dateKey: string): string {
   const [year, month, day] = dateKey.split('-').map(Number);
-
   return new Intl.DateTimeFormat('en-US', {
     year: 'numeric',
     month: 'long',
@@ -64,12 +53,8 @@ export function episodeTitle(dateKey: string): string {
 }
 
 export function publicObjectUrl(key: string): string {
-  const encoded = key
-    .split('/')
-    .map(encodeURIComponent)
-    .join('/');
-
-  return `${MEDIA_BASE_URL.replace(/\/$/, '')}/${encoded}`;
+  const encoded = key.split('/').map(encodeURIComponent).join('/');
+  return `/media/${encoded}`;
 }
 
 function decodeEntities(value: string): string {
@@ -79,16 +64,8 @@ function decodeEntities(value: string): string {
     .replace(/&gt;/gi, '>')
     .replace(/&quot;/gi, '"')
     .replace(/&#39;|&apos;/gi, "'")
-    .replace(
-      /&#x([0-9a-f]+);/gi,
-      (_, hex) =>
-        String.fromCodePoint(Number.parseInt(hex, 16)),
-    )
-    .replace(
-      /&#(\d+);/g,
-      (_, decimal) =>
-        String.fromCodePoint(Number.parseInt(decimal, 10)),
-    );
+    .replace(/&#x([0-9a-f]+);/gi, (_, hex) => String.fromCodePoint(Number.parseInt(hex, 16)))
+    .replace(/&#(\d+);/g, (_, decimal) => String.fromCodePoint(Number.parseInt(decimal, 10)));
 }
 
 function escapeHtml(value: string): string {
@@ -103,38 +80,26 @@ function escapeHtml(value: string): string {
 function safeUrl(value: string): string | null {
   try {
     const url = new URL(value.trim());
-
-    return url.protocol === 'https:' ||
-      url.protocol === 'http:'
-      ? url.href
-      : null;
+    return url.protocol === 'https:' || url.protocol === 'http:' ? url.href : null;
   } catch {
     return null;
   }
 }
 
 export function renderShowNotes(markdown: string): string {
-  const lines = markdown
-    .replace(/\r\n?/g, '\n')
-    .split('\n');
-
+  const lines = markdown.replace(/\r\n?/g, '\n').split('\n');
   const output: string[] = [];
   let paragraph: string[] = [];
   let listOpen = false;
 
   const closeParagraph = () => {
     if (!paragraph.length) return;
-
-    output.push(
-      `<p>${escapeHtml(paragraph.join(' ').trim())}</p>`,
-    );
-
+    output.push(`<p>${escapeHtml(paragraph.join(' ').trim())}</p>`);
     paragraph = [];
   };
 
   const closeList = () => {
     if (!listOpen) return;
-
     output.push('</ul>');
     listOpen = false;
   };
@@ -149,67 +114,40 @@ export function renderShowNotes(markdown: string): string {
     }
 
     const heading = line.match(/^(#{1,3})\s+(.+)$/);
-
     if (heading) {
       closeParagraph();
       closeList();
-
-      const level = Math.min(
-        heading[1].length + 1,
-        4,
-      );
-
-      output.push(
-        `<h${level}>${escapeHtml(heading[2])}</h${level}>`,
-      );
-
+      const level = Math.min(heading[1].length + 1, 4);
+      output.push(`<h${level}>${escapeHtml(heading[2])}</h${level}>`);
       continue;
     }
 
-    const bullet = line.match(
-      /^[-*]\s+(.+?)(?:\s+—\s*)?$/,
-    );
-
+    const bullet = line.match(/^[-*]\s+(.+?)(?:\s+—\s*)?$/);
     if (bullet) {
       closeParagraph();
-
       if (!listOpen) {
         output.push('<ul>');
         listOpen = true;
       }
 
-      const label = bullet[1]
-        .replace(/\s+—\s*$/, '')
-        .trim();
-
-      const nextLine =
-        lines[index + 1]?.trim() ?? '';
-
+      const label = bullet[1].replace(/\s+—\s*$/, '').trim();
+      const nextLine = lines[index + 1]?.trim() ?? '';
       const url = safeUrl(nextLine);
-
-      if (url) {
-        index++;
-      }
+      if (url) index++;
 
       output.push(
         url
           ? `<li><a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(label)}</a></li>`
           : `<li>${escapeHtml(label)}</li>`,
       );
-
       continue;
     }
 
     const standaloneUrl = safeUrl(line);
-
     if (standaloneUrl) {
       closeParagraph();
       closeList();
-
-      output.push(
-        `<p><a href="${escapeHtml(standaloneUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(standaloneUrl)}</a></p>`,
-      );
-
+      output.push(`<p><a href="${escapeHtml(standaloneUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(standaloneUrl)}</a></p>`);
       continue;
     }
 
@@ -218,6 +156,5 @@ export function renderShowNotes(markdown: string): string {
 
   closeParagraph();
   closeList();
-
   return output.join('\n');
 }
