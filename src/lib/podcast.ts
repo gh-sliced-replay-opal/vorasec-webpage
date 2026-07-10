@@ -11,8 +11,12 @@ export type EpisodeFile = {
   size: number;
 };
 
-const AUDIO_RE = /(?:^|\/)briefing_(\d{4}-\d{2}-\d{2})_(\d{4})\.mp3$/i;
-const NOTES_RE = /(?:^|\/)shownotes_(\d{4}-\d{2}-\d{2})_(\d{4})\.md$/i;
+const briefingMatch = key.match(/^briefing_(\d{4}-\d{2}-\d{2})\.mp3$/);
+const notesMatch = key.match(/^shownotes_(\d{4}-\d{2}-\d{2})\.md$/);
+
+const episodeId = briefingMatch[1];
+
+shownotesById.get(episodeId)
 
 export function pairEpisodes(objects: R2Object[]): EpisodeFile[] {
   const notes = new Map<string, string>();
