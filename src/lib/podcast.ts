@@ -1,4 +1,5 @@
-export const MEDIA_BASE_URL = 'https://briefing.vorasec.com';
+export const MEDIA_BASE_URL = 'https://briefing.vorasec.com/podcast
+  ';
 export const EPISODES_PER_PAGE = 12;
 
 export type EpisodeFile = {
