@@ -1,0 +1,35 @@
+<a class="brand-mark" href="/" aria-label="VORASEC home">
+	<img src="/vorasec-vs.png" alt="" width="48" height="48" />
+</a>
+
+<style>
+	.brand-mark {
+		display: inline-flex;
+		width: 46px;
+		height: 46px;
+		flex: 0 0 auto;
+		padding: 0;
+		border: 0;
+		border-radius: 50%;
+		text-decoration: none;
+		transition:
+			transform 180ms ease,
+			filter 180ms ease;
+	}
+
+	.brand-mark:hover {
+		transform: translateY(-1px);
+		filter: brightness(1.08);
+	}
+
+	.brand-mark:focus-visible {
+		outline: 2px solid #73d6e8;
+		outline-offset: 4px;
+	}
+
+	.brand-mark img {
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+</style>
