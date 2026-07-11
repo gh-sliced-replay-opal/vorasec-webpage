@@ -1,6 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 
+export const prerender = false;
+
+const TEST_SITE_KEY = '1x00000000000000000000AA';
+const turnstileSiteKey = Astro.locals.runtime.env.TURNSTILE_SITE_KEY
+  || (import.meta.env.DEV ? TEST_SITE_KEY : '');
+const contactStatus = Astro.url.searchParams.get('contact');
+
 const focusAreas = [
   {
     title: 'Threat intelligence & adversary analysis',
@@ -58,28 +65,105 @@ const focusAreas = [
     </div>
   </section>
 
-  <section class="section shell principles">
-    <div>
-      <p class="eyebrow">Working principles</p>
-      <h2>Clear scope. Visible reasoning. Durable handoff.</h2>
+  <section class="section shell contact-section" id="contact">
+    <div class="contact-intro">
+      <p class="eyebrow">Early conversations</p>
+      <h2>Tell me what you’re working through.</h2>
+      <p>
+        VoraSec’s services are still evolving, but I’m open to thoughtful
+        conversations about security problems that align with the work described
+        above. Share enough context to start; sensitive details can wait.
+      </p>
+      <p class="contact-note">
+        Prefer email? <a href="mailto:info@vorasec.com">info@vorasec.com</a>
+      </p>
     </div>
-    <p>
-      Any future engagement should leave the work more understandable than it
-      was before: documented decisions, bounded automation, observable failure,
-      and recommendations that fit the environment rather than a generic playbook.
-    </p>
+
+    <div class="contact-panel">
+      {contactStatus === 'success' && (
+        <p class="form-status success" role="status">
+          Message received. I’ll follow up from info@vorasec.com.
+        </p>
+      )}
+      {contactStatus === 'invalid' && (
+        <p class="form-status error" role="alert">
+          Please review the form and try again.
+        </p>
+      )}
+      {contactStatus === 'verification' && (
+        <p class="form-status error" role="alert">
+          The security check could not be verified. Please try again.
+        </p>
+      )}
+      {contactStatus === 'error' && (
+        <p class="form-status error" role="alert">
+          The message could not be delivered. Please email info@vorasec.com instead.
+        </p>
+      )}
+
+      {turnstileSiteKey ? (
+        <form class="contact-form" method="post" action="/api/contact">
+          <div class="field-row">
+            <label>
+              <span>Name</span>
+              <input name="name" type="text" autocomplete="name" maxlength="120" required />
+            </label>
+            <label>
+              <span>Email</span>
+              <input name="email" type="email" autocomplete="email" maxlength="254" required />
+            </label>
+          </div>
+
+          <label>
+            <span>Organization <small>Optional</small></span>
+            <input name="organization" type="text" autocomplete="organization" maxlength="120" />
+          </label>
+
+          <label>
+            <span>Area of interest</span>
+            <select name="interest" required>
+              <option value="">Select one</option>
+              <option value="Threat intelligence and adversary analysis">Threat intelligence & adversary analysis</option>
+              <option value="Detection engineering and threat hunting">Detection engineering & threat hunting</option>
+              <option value="Incident readiness and investigation">Incident readiness & investigation</option>
+              <option value="SOC workflows and analyst enablement">SOC workflows & analyst enablement</option>
+              <option value="Security automation and applied AI">Security automation & applied AI</option>
+              <option value="Something else">Something else</option>
+            </select>
+          </label>
+
+          <label>
+            <span>What would you like to discuss?</span>
+            <textarea name="message" rows="7" minlength="20" maxlength="5000" required></textarea>
+          </label>
+
+          <label class="honeypot" aria-hidden="true">
+            <span>Website</span>
+            <input name="website" type="text" tabindex="-1" autocomplete="off" />
+          </label>
+
+          <div
+            class="cf-turnstile"
+            data-sitekey={turnstileSiteKey}
+            data-action="contact"
+            data-theme="dark"
+          ></div>
+
+          <button class="button primary submit-button" type="submit">Start a conversation</button>
+          <p class="privacy-note">Your message is emailed to VoraSec and is not stored by this website.</p>
+        </form>
+      ) : (
+        <p class="form-status error">
+          The contact form is temporarily unavailable. Please email
+          <a href="mailto:info@vorasec.com"> info@vorasec.com</a>.
+        </p>
+      )}
+    </div>
   </section>
 
-  <section class="section shell early-note">
-    <p class="eyebrow">Early conversations</p>
-    <h2>The services are evolving alongside the work.</h2>
-    <p>
-      I’m not presenting a polished consultancy menu yet. For now, this is a
-      signal of intent and a place to build the offering deliberately around
-      work I know, practice, and can stand behind.
-    </p>
-    <a class="button primary" href="/about">Learn more about me</a>
-  </section>
+  {turnstileSiteKey && (
+    <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+  )}
 </BaseLayout>
 
 <style>
@@ -118,20 +202,118 @@ const focusAreas = [
     border-top: 1px solid var(--line);
   }
 
-  .principles {
+  .contact-section {
     display: grid;
-    grid-template-columns: 1.25fr 0.75fr;
-    gap: 5rem;
-    align-items: end;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 6rem;
+    align-items: start;
   }
 
-  .principles > p {
-    font-size: 1.1rem;
+  .contact-intro {
+    max-width: 480px;
   }
 
-  .early-note {
-    max-width: 780px;
-    margin-left: max(1.25rem, calc((100vw - var(--max)) / 2));
+  .contact-note a {
+    color: var(--text);
+  }
+
+  .contact-panel {
+    padding-top: 0.4rem;
+  }
+
+  .contact-form,
+  .contact-form label {
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .contact-form {
+    gap: 1.3rem;
+  }
+
+  .field-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem;
+  }
+
+  .contact-form label > span {
+    color: var(--text);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .contact-form small {
+    margin-left: 0.35rem;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  .contact-form input,
+  .contact-form select,
+  .contact-form textarea {
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.035);
+    color: var(--text);
+    font: inherit;
+    padding: 0.8rem 0.9rem;
+  }
+
+  .contact-form textarea {
+    resize: vertical;
+  }
+
+  .contact-form input:focus,
+  .contact-form select:focus,
+  .contact-form textarea:focus {
+    border-color: var(--a);
+    outline: 2px solid rgba(115, 214, 232, 0.16);
+    outline-offset: 2px;
+  }
+
+  .contact-form option {
+    background: var(--bg2);
+    color: var(--text);
+  }
+
+  .submit-button {
+    width: fit-content;
+    cursor: pointer;
+    background: transparent;
+    font: inherit;
+    white-space: nowrap;
+  }
+
+  .privacy-note {
+    margin: -0.35rem 0 0;
+    font-size: 0.82rem;
+  }
+
+  .form-status {
+    margin: 0 0 1.5rem;
+    padding: 0.9rem 1rem;
+    border-left: 2px solid var(--a);
+    background: rgba(115, 214, 232, 0.07);
+  }
+
+  .form-status.error {
+    border-left-color: #f5a7a7;
+    background: rgba(245, 167, 167, 0.07);
+  }
+
+  .form-status a {
+    color: var(--text);
+  }
+
+  .honeypot {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
 
   @media (max-width: 760px) {
@@ -141,7 +323,8 @@ const focusAreas = [
     }
 
     .services-grid,
-    .principles {
+    .contact-section,
+    .field-row {
       grid-template-columns: 1fr;
       gap: 2.5rem;
     }

@@ -1,0 +1,5 @@
+# Cloudflare Turnstile test secret. Replace with the production secret in Cloudflare.
+TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA
+
+# Cloudflare Turnstile test site key. Set the production value as a Worker variable.
+TURNSTILE_SITE_KEY=1x00000000000000000000AA
