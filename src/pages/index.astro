@@ -1,14 +1,19 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 const areas = [
-  ['Security Operations', 'SOC operations, incident response, threat analysis, and practical defensive engineering.'],
-  ['Technology', 'Home labs, infrastructure, automation, AI systems, and lessons learned from building them.'],
-  ['Cyber Briefings', 'AI-assisted audio briefings that turn current cybersecurity reporting into prioritized intelligence.'],
+  ['Cyber Threat Intelligence', 'Adversary tracking, TTP analysis, IOC development, and intelligence reporting that helps defenders act.'],
+  ['Detection & Incident Response', 'Detection development, incident triage, malware analysis, containment, and clear threat intelligence reporting for technical teams and stakeholders.'],
+  ['Analyst Enablement & Automation', 'Training, repeatable workflows, and responsible automation that help analysts work with more context and confidence.'],
+];
+const impact = [
+  'Helped uncover and disrupt a software supply-chain attack distributing SeroXen malware through a NuGet repository with more than two million downloads.',
+  'Trusted to lead threat intelligence analysis and train analysts on adversary tactics, techniques, and procedures.',
+  'Developed signatures and intelligence used to identify and track sophisticated threat actor activity.',
 ];
 ---
 <BaseLayout
   title="David | Cybersecurity, Technology & AI"
-  description="David's work in security operations, incident response, automation, and applied AI."
+  description="David's work in cyber threat intelligence, intrusion analysis, incident response, detection engineering, and security automation."
 >
   <section class="hero brand-hero shell">
     <img
@@ -22,15 +27,17 @@ const areas = [
     />
 
     <div class="hero-copy">
-      <p class="eyebrow">Cybersecurity · Technology · Automation</p>
-      <h1>I identify active intrusions and turn raw telemetry into decisions.</h1>
+      <p class="eyebrow">Cyber Threat Intelligence · Intrusion Analysis · Incident Response</p>
+      <h1>I identify active intrusions, connect adversary behavior across data, and turn raw telemetry into action.</h1>
       <p>
-        I’m David, a military veteran and cybersecurity professional focused on
-        security operations, incident response, automation, and applied AI.
+        I’m David, a military veteran and cybersecurity professional with experience
+        across government, enterprise security, and global managed detection and
+        response. My work spans threat intelligence, threat actor tracking, detection
+        development, malware analysis, incident response, and analyst enablement.
       </p>
       <div class="buttons">
-        <a class="button primary" href="/about">About me</a>
-        <a class="button" href="/podcast">Listen to the podcast</a>
+        <a class="button primary" href="/about">About my work</a>
+        <a class="button" href="/services">Explore VoraSec services</a>
       </div>
     </div>
   </section>
@@ -44,6 +51,16 @@ const areas = [
           <h3>{title}</h3>
           <p>{text}</p>
         </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section shell impact">
+    <p class="eyebrow">Selected impact</p>
+    <h2>Evidence from the work.</h2>
+    <div class="impact-grid">
+      {impact.map((item) => (
+        <article><p>{item}</p></article>
       ))}
     </div>
   </section>
@@ -110,6 +127,22 @@ const areas = [
     margin-left: max(1.25rem, calc((100vw - var(--max)) / 2));
   }
 
+  .impact-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+    margin-top: 3rem;
+  }
+
+  .impact-grid article {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .impact-grid p {
+    margin-top: 0;
+  }
+
   @media (max-width: 760px) {
     .brand-hero {
       --hero-logo-width: 10rem;
@@ -126,6 +159,10 @@ const areas = [
       right: -0.5rem;
       width: var(--hero-logo-width);
       opacity: 0.3;
+    }
+
+    .impact-grid {
+      grid-template-columns: 1fr;
     }
 
   }
