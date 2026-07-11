@@ -12,6 +12,15 @@
     }
   ],
 
+  "keep_vars": true,
+
+  "send_email": [
+    {
+      "name": "CONTACT_EMAIL",
+      "destination_address": "info@vorasec.com"
+    }
+  ],
+
   "assets": {
     "directory": "./dist",
     "binding": "ASSETS"
