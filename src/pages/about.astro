@@ -1,9 +1,178 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-const skills=['SOC Operations','Incident Response','Cyber Threat Intelligence','Security Automation','Cloud Architecture','Linux','n8n','Network Security','Applied AI'];
+
+const skills = [
+  'Cyber Threat Intelligence',
+  'Intrusion Analysis',
+  'Detection Engineering',
+  'Incident Response',
+  'Malware Analysis',
+  'Threat Hunting',
+  'Threat Intelligence Reporting',
+  'Analyst Training',
+  'Security Automation',
+];
+
+const impact = [
+  {
+    title: 'Supply-chain investigation',
+    text: 'Helped uncover a malicious NuGet package distributing SeroXen malware, contributing to its takedown and protecting a repository with more than two million downloads.',
+  },
+  {
+    title: 'Threat intelligence leadership',
+    text: 'Trusted to lead intelligence analysis, train new analysts on adversary TTPs, and share actionable reporting with government and industry stakeholders.',
+  },
+  {
+    title: 'Adversary tracking',
+    text: 'Developed signatures, indicators, and analytical findings used to identify and track sophisticated malicious activity across multiple data sources.',
+  },
+  {
+    title: 'Operational recognition',
+    text: 'Recognized by a government client for an instrumental role in collaborative cyber efforts and presented with a challenge coin.',
+  },
+];
 ---
-<BaseLayout title="About | David">
-<section class="hero shell"><p class="eyebrow">About me</p><h1>Operator, builder, and lifelong student.</h1><p>I’m a military veteran and cybersecurity professional with experience in security operations and incident response. I focus on identifying meaningful threats, improving defensive workflows, and making complicated systems easier to operate.</p><p>I learn best by building. My home lab is a running series of projects where I test new ideas against new tech: a local Security Onion deployment, agentic vulnerability research, and n8n automation workflows are a few of the recent ones.<p></section>
-<section class="section shell about"><article><h2>My approach</h2><p>I prefer practical security over security theater. Good systems should reduce uncertainty, preserve evidence, fail visibly, and give an operator enough context to make a sound decision.</p><p>Outside of security work, I build home-lab infrastructure and study how automation and AI can improve analyst workflows without hiding source material or failure modes.</p></article><aside><p class="eyebrow">Core areas</p><ul class="tags">{skills.map(skill=><li>{skill}</li>)}</ul></aside></section>
+
+<BaseLayout
+  title="About | David"
+  description="David's background in cyber threat intelligence, intrusion analysis, managed detection and response, malware analysis, and detection engineering."
+>
+  <section class="hero shell about-hero">
+    <p class="eyebrow">About me</p>
+    <h1>From frontline response to threat intelligence leadership.</h1>
+    <p>
+      I’m a military veteran and cybersecurity professional whose career has
+      progressed from enterprise security operations and incident response into
+      managed detection, malware analysis, detection engineering, and cyber threat
+      intelligence.
+    </p>
+  </section>
+
+  <section class="section shell story">
+    <article>
+      <p class="eyebrow">Career perspective</p>
+      <h2>Built through investigations, decisions, and shared intelligence.</h2>
+      <p>
+        I began by investigating events across EDR, SIEM, network, and threat
+        intelligence sources. That foundation taught me how to preserve evidence,
+        determine what matters during an intrusion, communicate clearly under
+        pressure, and make containment decisions with incomplete information.
+      </p>
+      <p>
+        At CrowdStrike, I investigated malicious activity across multiple operating
+        systems, analyzed malware, guided junior analysts through escalations, and
+        served on a senior analyst team supporting a 150-person MDR operation. One
+        investigation uncovered a malicious NuGet package distributing SeroXen
+        malware and contributed directly to its takedown.
+      </p>
+      <p>
+        Today, my work focuses on sophisticated adversaries. I correlate large
+        datasets, develop signatures for tracking malicious activity, produce and
+        share actionable threat intelligence reports, and help analysts understand
+        adversary tactics, techniques, and procedures.
+      </p>
+    </article>
+  </section>
+
+  <section class="section shell">
+    <p class="eyebrow">Selected impact</p>
+    <h2>Work that changed an outcome.</h2>
+    <div class="impact-grid">
+      {impact.map((item) => (
+        <article>
+          <h3>{item.title}</h3>
+          <p>{item.text}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section shell about">
+    <article>
+      <p class="eyebrow">My approach</p>
+      <h2>Practical security over security theater.</h2>
+      <p>
+        Good systems should reduce uncertainty, preserve evidence, fail visibly,
+        and give an operator enough context to make a sound decision. Intelligence
+        should be useful to the people receiving it—not merely technically correct.
+      </p>
+      <p>
+        Outside of security work, I build home-lab infrastructure and study how
+        automation and AI can improve analyst workflows without hiding source
+        material, assumptions, or failure modes.
+      </p>
+    </article>
+    <aside>
+      <p class="eyebrow">Core areas</p>
+      <ul class="tags">{skills.map((skill) => <li>{skill}</li>)}</ul>
+    </aside>
+  </section>
+
+  <section class="section shell credentials">
+    <article>
+      <p class="eyebrow">Education</p>
+      <h2>Academic foundation.</h2>
+      <p><strong>M.S., Cybersecurity and Information Assurance</strong><br />Western Governors University</p>
+      <p><strong>B.S., Information Systems Management</strong><br />University of Maryland Global Campus</p>
+    </article>
+    <article>
+      <p class="eyebrow">Certifications</p>
+      <h2>Technical credentials.</h2>
+      <p>GIAC Certified Incident Handler (GCIH)</p>
+      <p>CompTIA PenTest+ · CySA+ · Security+</p>
+    </article>
+  </section>
 </BaseLayout>
-<style>.about{display:grid;grid-template-columns:1.4fr .8fr;gap:6rem}.about article{max-width:680px}@media(max-width:760px){.about{grid-template-columns:1fr;gap:3rem}}</style>
+
+<style>
+  .about-hero,
+  .story article {
+    max-width: 860px;
+  }
+
+  .impact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 3rem;
+    margin-top: 3rem;
+  }
+
+  .impact-grid article {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .about {
+    display: grid;
+    grid-template-columns: 1.4fr 0.8fr;
+    gap: 6rem;
+  }
+
+  .about article {
+    max-width: 680px;
+  }
+
+  .credentials {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 5rem;
+  }
+
+  .credentials article {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .credentials strong {
+    color: var(--text);
+  }
+
+  @media (max-width: 760px) {
+    .impact-grid,
+    .about,
+    .credentials {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+  }
+</style>

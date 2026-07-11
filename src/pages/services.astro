@@ -3,32 +3,45 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 const focusAreas = [
   {
-    title: 'Security operations & incident readiness',
-    text: 'Practical support for triage, investigation workflows, response planning, and the operating habits that make incidents easier to understand and contain.',
+    title: 'Threat intelligence & adversary analysis',
+    text: 'Research and analysis of threat actor behavior, TTPs, and indicators of compromise—translated into clear intelligence reports, defensive recommendations, and detection opportunities.',
   },
   {
-    title: 'Detection engineering & automation',
-    text: 'Focused improvements to detections, enrichment, alert handling, and repeatable automation—with attention to failure modes and maintainability.',
+    title: 'Detection engineering & threat hunting',
+    text: 'Review and development of detection logic, signatures, hunting strategies, and enrichment methods designed to reveal meaningful malicious activity across security telemetry.',
   },
   {
-    title: 'Applied AI for security work',
-    text: 'Careful use of AI to summarize, prioritize, and accelerate security workflows without hiding assumptions or removing human judgment.',
+    title: 'Incident readiness & investigation',
+    text: 'Practical improvements to triage, investigation, escalation, containment, and the generation and sharing of threat intelligence reports for defenders and stakeholders.',
+  },
+  {
+    title: 'SOC workflows & analyst enablement',
+    text: 'Runbooks, training, workflow reviews, and operational guidance informed by experience handling escalations, mentoring analysts, and supporting high-volume MDR operations.',
+  },
+  {
+    title: 'Security automation & applied AI',
+    text: 'Bounded automation for enrichment, prioritization, reporting, and repetitive analyst tasks—with visible reasoning, observable failures, and human judgment preserved.',
   },
 ];
 ---
 
 <BaseLayout
   title="Services | VORASEC"
-  description="Developing cybersecurity services informed by hands-on security operations, incident response, automation, and applied AI."
+  description="Developing cybersecurity services grounded in threat intelligence, intrusion analysis, incident response, detection engineering, and security automation."
 >
   <section class="hero shell services-hero">
     <p class="eyebrow">VORASEC services · In development</p>
     <h1>Practical security work, built around useful outcomes.</h1>
     <p>
-      VORASEC will be the home for independent cybersecurity services shaped by
-      my experience in security operations, incident response, automation, and
-      applied AI. The offering is still taking form; this page marks the
-      direction, not a finished catalog.
+      VORASEC is being developed as the home for independent cybersecurity
+      services grounded in hands-on experience across threat intelligence,
+      intrusion analysis, managed detection and response, malware analysis,
+      detection engineering, and security operations.
+    </p>
+    <p>
+      The service catalog is still taking shape, but the foundation is established:
+      understand the adversary, improve the signal available to defenders, and
+      leave security teams better equipped to make decisions.
     </p>
   </section>
 
@@ -62,7 +75,8 @@ const focusAreas = [
     <h2>The services are evolving alongside the work.</h2>
     <p>
       I’m not presenting a polished consultancy menu yet. For now, this is a
-      signal of intent and a place to build the offering deliberately.
+      signal of intent and a place to build the offering deliberately around
+      work I know, practice, and can stand behind.
     </p>
     <a class="button primary" href="/about">Learn more about me</a>
   </section>
@@ -94,7 +108,7 @@ const focusAreas = [
 
   .services-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 2.5rem;
     margin-top: 3rem;
   }
