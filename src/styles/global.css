@@ -24,6 +24,13 @@
 	font-display: swap;
 }
 @font-face {
+	font-family: "Antonio";
+	src: url("/fonts/antonio-latin.woff2") format("woff2");
+	font-weight: 500 700;
+	font-style: normal;
+	font-display: swap;
+}
+@font-face {
 	font-family: "Atkinson";
 	src: url("/fonts/atkinson-bold.woff") format("woff");
 	font-weight: 700;
@@ -55,24 +62,27 @@ h3,
 h4,
 h5,
 h6 {
+	font-family: "Antonio", sans-serif;
+	font-weight: 600;
+	letter-spacing: -0.012em;
 	margin: 0 0 0.5rem 0;
 	color: rgb(var(--black));
-	line-height: 1.2;
+	line-height: 1.05;
 }
 h1 {
-	font-size: 3.052em;
+	font-size: clamp(2.7rem, 5.2vw, 4.55rem);
 }
 h2 {
-	font-size: 2.441em;
+	font-size: clamp(1.75rem, 2.9vw, 2.55rem);
 }
 h3 {
-	font-size: 1.953em;
+	font-size: 1.6rem;
 }
 h4 {
-	font-size: 1.563em;
+	font-size: 1.35rem;
 }
 h5 {
-	font-size: 1.25em;
+	font-size: 1.15rem;
 }
 strong,
 b {
