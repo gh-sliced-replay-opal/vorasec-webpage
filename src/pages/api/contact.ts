@@ -11,6 +11,7 @@ const ALLOWED_INTERESTS = new Set([
   'Incident readiness and investigation',
   'SOC workflows and analyst enablement',
   'Security automation and applied AI',
+  'Personal security and digital hygiene',
   'Something else',
 ]);
 
