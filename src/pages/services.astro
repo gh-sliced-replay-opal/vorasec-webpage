@@ -1,0 +1,135 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const focusAreas = [
+  {
+    title: 'Security operations & incident readiness',
+    text: 'Practical support for triage, investigation workflows, response planning, and the operating habits that make incidents easier to understand and contain.',
+  },
+  {
+    title: 'Detection engineering & automation',
+    text: 'Focused improvements to detections, enrichment, alert handling, and repeatable automation—with attention to failure modes and maintainability.',
+  },
+  {
+    title: 'Applied AI for security work',
+    text: 'Careful use of AI to summarize, prioritize, and accelerate security workflows without hiding assumptions or removing human judgment.',
+  },
+];
+---
+
+<BaseLayout
+  title="Services | VORASEC"
+  description="Developing cybersecurity services informed by hands-on security operations, incident response, automation, and applied AI."
+>
+  <section class="hero shell services-hero">
+    <p class="eyebrow">VORASEC services · In development</p>
+    <h1>Practical security work, built around useful outcomes.</h1>
+    <p>
+      VORASEC will be the home for independent cybersecurity services shaped by
+      my experience in security operations, incident response, automation, and
+      applied AI. The offering is still taking form; this page marks the
+      direction, not a finished catalog.
+    </p>
+  </section>
+
+  <section class="section shell" aria-labelledby="focus-heading">
+    <p class="eyebrow">Planned focus</p>
+    <h2 id="focus-heading">Where I expect to help.</h2>
+    <div class="services-grid">
+      {focusAreas.map((area) => (
+        <article>
+          <h3>{area.title}</h3>
+          <p>{area.text}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section shell principles">
+    <div>
+      <p class="eyebrow">Working principles</p>
+      <h2>Clear scope. Visible reasoning. Durable handoff.</h2>
+    </div>
+    <p>
+      Any future engagement should leave the work more understandable than it
+      was before: documented decisions, bounded automation, observable failure,
+      and recommendations that fit the environment rather than a generic playbook.
+    </p>
+  </section>
+
+  <section class="section shell early-note">
+    <p class="eyebrow">Early conversations</p>
+    <h2>The services are evolving alongside the work.</h2>
+    <p>
+      I’m not presenting a polished consultancy menu yet. For now, this is a
+      signal of intent and a place to build the offering deliberately.
+    </p>
+    <a class="button primary" href="/about">Learn more about me</a>
+  </section>
+</BaseLayout>
+
+<style>
+  .services-hero {
+    position: relative;
+    max-width: 1000px;
+  }
+
+  .services-hero::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 3rem;
+    width: min(28vw, 250px);
+    aspect-ratio: 1;
+    background: url('/favicon.png') center / contain no-repeat;
+    opacity: 0.08;
+    pointer-events: none;
+  }
+
+  .services-hero h1,
+  .services-hero > p {
+    position: relative;
+    z-index: 1;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+    margin-top: 3rem;
+  }
+
+  .services-grid article {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .principles {
+    display: grid;
+    grid-template-columns: 1.25fr 0.75fr;
+    gap: 5rem;
+    align-items: end;
+  }
+
+  .principles > p {
+    font-size: 1.1rem;
+  }
+
+  .early-note {
+    max-width: 780px;
+    margin-left: max(1.25rem, calc((100vw - var(--max)) / 2));
+  }
+
+  @media (max-width: 760px) {
+    .services-hero::after {
+      width: 8rem;
+      bottom: 1rem;
+    }
+
+    .services-grid,
+    .principles {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+  }
+</style>

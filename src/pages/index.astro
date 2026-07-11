@@ -1,10 +1,142 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-const areas=[['Security Operations','SOC operations, incident response, threat analysis, and practical defensive engineering.'],['Technology','Home labs, infrastructure, automation, AI systems, and lessons learned from building them.'],['Cyber Briefings','AI-assisted audio briefings that turn current cybersecurity reporting into prioritized intelligence.']];
+const areas = [
+  ['Security Operations', 'SOC operations, incident response, threat analysis, and practical defensive engineering.'],
+  ['Technology', 'Home labs, infrastructure, automation, AI systems, and lessons learned from building them.'],
+  ['Cyber Briefings', 'AI-assisted audio briefings that turn current cybersecurity reporting into prioritized intelligence.'],
+];
 ---
-<BaseLayout title="David | Cybersecurity, Technology & AI">
-<section class="hero shell"><p class="eyebrow">Cybersecurity · Technology · Automation</p><h1>I identify active intrusions and turn raw telemetry into decisions.</h1><p>I’m David, a military veteran and cybersecurity professional focused on security operations, incident response, automation, and applied AI.</p><div class="buttons"><a class="button primary" href="/about">About me</a><a class="button" href="/podcast">Listen to the podcast</a></div></section>
-<section class="section shell"><p class="eyebrow">What I work on</p><h2>Security with an operator’s perspective.</h2><div class="grid">{areas.map(([title,text])=><article><h3>{title}</h3><p>{text}</p></article>)}</div></section>
-<section class="section shell project"><p class="eyebrow">Current project</p><h2>AI-powered cyber briefings</h2><p>An automated pipeline that collects trusted reporting, prioritizes exploited vulnerabilities, and delivers a concise audio briefing.</p><a class="button" href="/podcast">Explore the project</a></section>
+<BaseLayout
+  title="David | Cybersecurity, Technology & AI"
+  description="David's work in security operations, incident response, automation, and applied AI."
+>
+  <section class="hero brand-hero shell">
+    <div class="digital-fabric" aria-hidden="true"></div>
+    <img
+      class="hero-logo"
+      src="/vorasec-logo.png"
+      alt="VORASEC"
+      width="720"
+      height="720"
+      decoding="async"
+      fetchpriority="high"
+    />
+
+    <div class="hero-copy">
+      <p class="eyebrow">Cybersecurity · Technology · Automation</p>
+      <h1>I identify active intrusions and turn raw telemetry into decisions.</h1>
+      <p>
+        I’m David, a military veteran and cybersecurity professional focused on
+        security operations, incident response, automation, and applied AI.
+      </p>
+      <div class="buttons">
+        <a class="button primary" href="/about">About me</a>
+        <a class="button" href="/podcast">Listen to the podcast</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section shell">
+    <p class="eyebrow">What I work on</p>
+    <h2>Security with an operator’s perspective.</h2>
+    <div class="grid">
+      {areas.map(([title, text]) => (
+        <article>
+          <h3>{title}</h3>
+          <p>{text}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section shell project">
+    <p class="eyebrow">Current project</p>
+    <h2>AI-powered cyber briefings</h2>
+    <p>
+      An automated pipeline that collects trusted reporting, prioritizes
+      exploited vulnerabilities, and delivers a concise audio briefing.
+    </p>
+    <a class="button" href="/podcast">Explore the project</a>
+  </section>
 </BaseLayout>
-<style>.project{max-width:760px;margin-left:max(1.25rem,calc((100vw - var(--max))/2))}</style>
+
+<style>
+  .brand-hero {
+    position: relative;
+    min-height: min(760px, calc(100vh - 72px));
+    overflow: hidden;
+    isolation: isolate;
+  }
+
+  .hero-copy {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+  }
+
+  .hero-logo {
+    position: absolute;
+    z-index: 1;
+    top: 2.4rem;
+    right: -1rem;
+    width: clamp(14rem, 27vw, 19rem);
+    height: auto;
+    opacity: 0.4;
+    mask-image: linear-gradient(135deg, #000 55%, rgba(0, 0, 0, 0.78) 78%, transparent 100%);
+  }
+
+  .digital-fabric {
+    position: absolute;
+    z-index: -1;
+    right: -7%;
+    bottom: -5%;
+    width: 72%;
+    height: 58%;
+    opacity: 0.28;
+    transform: rotate(-7deg) skewY(-5deg);
+    transform-origin: 70% 100%;
+    background-image:
+      repeating-linear-gradient(90deg, rgba(115, 214, 232, 0.18) 0 1px, transparent 1px 34px),
+      repeating-linear-gradient(0deg, rgba(167, 240, 207, 0.11) 0 1px, transparent 1px 30px),
+      radial-gradient(circle at 50% 55%, rgba(115, 214, 232, 0.16), transparent 60%);
+    mask-image: radial-gradient(ellipse at 60% 70%, #000 5%, rgba(0, 0, 0, 0.8) 42%, transparent 78%);
+  }
+
+  .brand-hero::after {
+    content: '';
+    position: absolute;
+    z-index: -2;
+    inset: 0;
+    background:
+      radial-gradient(circle at 88% 16%, rgba(115, 214, 232, 0.08), transparent 28%),
+      linear-gradient(115deg, transparent 45%, rgba(39, 44, 52, 0.2));
+    pointer-events: none;
+  }
+
+  .project {
+    max-width: 760px;
+    margin-left: max(1.25rem, calc((100vw - var(--max)) / 2));
+  }
+
+  @media (max-width: 760px) {
+    .brand-hero {
+      min-height: 690px;
+      padding-top: 8rem;
+    }
+
+    .hero-logo {
+      top: 1.2rem;
+      right: -0.5rem;
+      width: 10rem;
+      opacity: 0.3;
+    }
+
+    .digital-fabric {
+      right: -55%;
+      bottom: -4%;
+      width: 160%;
+      height: 52%;
+      opacity: 0.3;
+    }
+  }
+</style>

@@ -4,6 +4,7 @@ const path = Astro.url.pathname;
 const nav = [
   ['/', 'Home'],
   ['/about', 'About'],
+  ['/services', 'Services'],
   ['/blog', 'Blog'],
   ['/podcast', 'AI Podcast'],
 ];
@@ -15,7 +16,9 @@ const nav = [
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="description" content={description} />
   <meta name="theme-color" content="#20242b" />
-  <link rel="icon" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   <title>{title}</title>
 </head>
 <body>
@@ -27,7 +30,7 @@ const nav = [
     </div>
   </header>
   <main id="main"><slot /></main>
-  <footer><div class="shell foot"><p>© {new Date().getFullYear()} David.</p><p><a href="/blog">Writing</a> · <a href="/podcast">Podcast</a></p></div></footer>
+  <footer><div class="shell foot"><p>© {new Date().getFullYear()} David.</p><p><a href="/services">Services</a> · <a href="/blog">Writing</a> · <a href="/podcast">Podcast</a></p></div></footer>
 </body>
 </html>
 <style is:global>
