@@ -61,6 +61,8 @@ const areas = [
 
 <style>
   .brand-hero {
+    --hero-logo-width: clamp(14rem, 27vw, 19rem);
+    --hero-heading-gap: 6rem;
     position: relative;
     min-height: min(760px, calc(100vh - 72px));
     overflow: hidden;
@@ -70,7 +72,15 @@ const areas = [
   .hero-copy {
     position: relative;
     z-index: 2;
-    max-width: 900px;
+    max-width: none;
+  }
+
+  .hero-copy h1 {
+    max-width: calc(100% - var(--hero-logo-width) - var(--hero-heading-gap));
+  }
+
+  .hero-copy > p:not(.eyebrow) {
+    max-width: 720px;
   }
 
   .hero-logo {
@@ -78,7 +88,7 @@ const areas = [
     z-index: 1;
     top: 2.4rem;
     right: -1rem;
-    width: clamp(14rem, 27vw, 19rem);
+    width: var(--hero-logo-width);
     height: auto;
     opacity: 0.4;
     mask-image: linear-gradient(135deg, #000 55%, rgba(0, 0, 0, 0.78) 78%, transparent 100%);
@@ -102,14 +112,19 @@ const areas = [
 
   @media (max-width: 760px) {
     .brand-hero {
+      --hero-logo-width: 10rem;
       min-height: 690px;
       padding-top: 8rem;
+    }
+
+    .hero-copy h1 {
+      max-width: 100%;
     }
 
     .hero-logo {
       top: 1.2rem;
       right: -0.5rem;
-      width: 10rem;
+      width: var(--hero-logo-width);
       opacity: 0.3;
     }
 
