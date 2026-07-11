@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import InteractiveFabric from '../components/InteractiveFabric.astro';
 const areas = [
   ['Security Operations', 'SOC operations, incident response, threat analysis, and practical defensive engineering.'],
   ['Technology', 'Home labs, infrastructure, automation, AI systems, and lessons learned from building them.'],
@@ -10,8 +11,8 @@ const areas = [
   title="David | Cybersecurity, Technology & AI"
   description="David's work in security operations, incident response, automation, and applied AI."
 >
-  <section class="hero brand-hero shell">
-    <div class="digital-fabric" aria-hidden="true"></div>
+  <section class="hero brand-hero shell" data-fabric-host>
+    <InteractiveFabric />
     <img
       class="hero-logo"
       src="/vorasec-logo.png"
@@ -85,23 +86,6 @@ const areas = [
     mask-image: linear-gradient(135deg, #000 55%, rgba(0, 0, 0, 0.78) 78%, transparent 100%);
   }
 
-  .digital-fabric {
-    position: absolute;
-    z-index: -1;
-    right: -7%;
-    bottom: -5%;
-    width: 72%;
-    height: 58%;
-    opacity: 0.28;
-    transform: rotate(-7deg) skewY(-5deg);
-    transform-origin: 70% 100%;
-    background-image:
-      repeating-linear-gradient(90deg, rgba(115, 214, 232, 0.18) 0 1px, transparent 1px 34px),
-      repeating-linear-gradient(0deg, rgba(167, 240, 207, 0.11) 0 1px, transparent 1px 30px),
-      radial-gradient(circle at 50% 55%, rgba(115, 214, 232, 0.16), transparent 60%);
-    mask-image: radial-gradient(ellipse at 60% 70%, #000 5%, rgba(0, 0, 0, 0.8) 42%, transparent 78%);
-  }
-
   .brand-hero::after {
     content: '';
     position: absolute;
@@ -131,12 +115,5 @@ const areas = [
       opacity: 0.3;
     }
 
-    .digital-fabric {
-      right: -55%;
-      bottom: -4%;
-      width: 160%;
-      height: 52%;
-      opacity: 0.3;
-    }
   }
 </style>
