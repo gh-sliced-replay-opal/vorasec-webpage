@@ -1,174 +1,98 @@
 ---
+import ContactSection from '../components/ContactSection.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 export const prerender = false;
 
-const TEST_SITE_KEY = '1x00000000000000000000AA';
-const turnstileSiteKey = Astro.locals.runtime.env.TURNSTILE_SITE_KEY
-  || (import.meta.env.DEV ? TEST_SITE_KEY : '');
-const contactStatus = Astro.url.searchParams.get('contact');
-
-const focusAreas = [
-  {
-    title: 'Threat intelligence & adversary analysis',
-    text: 'Research and analysis of threat actor behavior, TTPs, and indicators of compromise—translated into clear intelligence reports, defensive recommendations, and detection opportunities.',
-  },
-  {
-    title: 'Detection engineering & threat hunting',
-    text: 'Review and development of detection logic, signatures, hunting strategies, and enrichment methods designed to reveal meaningful malicious activity across security telemetry.',
-  },
-  {
-    title: 'Incident readiness & investigation',
-    text: 'Practical improvements to triage, investigation, escalation, containment, and the generation and sharing of threat intelligence reports for defenders and stakeholders.',
-  },
-  {
-    title: 'SOC workflows & analyst enablement',
-    text: 'Runbooks, training, workflow reviews, and operational guidance informed by experience handling escalations, mentoring analysts, and supporting high-volume MDR operations.',
-  },
-  {
-    title: 'Security automation & applied AI',
-    text: 'Bounded automation for enrichment, prioritization, reporting, and repetitive analyst tasks—with visible reasoning, observable failures, and human judgment preserved.',
-  },
-  {
-    title: 'Personal security & digital hygiene',
-    text: 'Practical guidance for individuals and households, including operational security reviews, account and device hardening, privacy-conscious digital hygiene, exposure reduction, and plain-language cybersecurity consulting.',
-  },
+const overviewRows = [
+  ['Level 1', 'Personal Cybersecurity Essentials', 'Personal protection', 'Foundation', 'One-time'],
+  ['Level 2', 'Account, Identity & Privacy Protection', 'Personal protection', 'Includes Level 1', 'One-time'],
+  ['Level 3', 'Home & Identity Exposure Review', 'Personal protection', 'Includes Levels 1–2', 'One-time'],
+  ['Care', 'Personal Protection Care', 'Personal protection', 'Requires Level 2 or 3', 'Subscription'],
+  ['Level 4', 'Secure Home Network Deployment', 'Home network', 'Foundation', 'One-time'],
+  ['Level 5', 'Ongoing Home Security Care', 'Home network', 'Requires Level 4', 'Quarterly or weekly'],
 ];
 ---
 
 <BaseLayout
-  title="Services | VoraSec"
-  description="Developing cybersecurity services grounded in threat intelligence, intrusion analysis, incident response, detection engineering, and security automation."
+  title="Personal & Home Cybersecurity Services | VoraSec"
+  description="Practical cybersecurity services for individuals and families—from account and identity protection to secure home-network deployment and ongoing care."
 >
   <section class="hero shell services-hero">
-    <p class="eyebrow">VoraSec services · In development</p>
-    <h1>Practical security work, built around useful outcomes.</h1>
+    <p class="eyebrow">Personal & home cybersecurity services</p>
+    <h1>Practical protection for your digital life and your home.</h1>
     <p>
-      VoraSec is being developed as the home for independent cybersecurity
-      services grounded in hands-on experience across threat intelligence,
-      intrusion analysis, managed detection and response, malware analysis,
-      detection engineering, and security operations.
+      We help individuals and families secure the accounts, personal information,
+      devices, and connected technology they rely on every day. Choose a one-time
+      service to establish stronger protection or ongoing care to help maintain it.
     </p>
-    <p>
-      The service catalog is still taking shape, but the foundation is established:
-      understand the adversary, improve the signal available to defenders, and
-      leave security teams better equipped to make decisions.
+    <div class="buttons">
+      <a class="button primary" href="#service-guide">Find the right service</a>
+      <a class="button" href="#contact">Contact VoraSec</a>
+    </div>
+  </section>
+
+  <section class="section shell" aria-labelledby="paths-heading">
+    <p class="eyebrow">Two paths</p>
+    <h2 id="paths-heading">Choose the part of your digital life you want to protect.</h2>
+    <div class="path-summary">
+      <article>
+        <p class="path-label">Personal Protection</p>
+        <h3>Accounts, identity, privacy, and scam support.</h3>
+        <p>
+          Levels 1–3 build on one another. Level 2 includes Level 1, and Level 3
+          includes Levels 1 and 2. Personal Protection Care is available after
+          Level 2 or 3 establishes a secure baseline.
+        </p>
+        <a class="button" href="/services/personal-protection">View full Personal Protection details</a>
+      </article>
+      <article>
+        <p class="path-label">Home Network Protection</p>
+        <h3>A professionally secured foundation for connected homes.</h3>
+        <p>
+          Level 4 establishes a professionally configured home network. Level 5
+          provides optional ongoing care and is available after Level 4.
+        </p>
+        <a class="button" href="/services/home-network-protection">View full Home Network details</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="section shell" id="service-guide" aria-labelledby="guide-heading">
+    <p class="eyebrow">Service guide</p>
+    <h2 id="guide-heading">How each offering fits.</h2>
+    <div class="service-table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Level</th>
+            <th scope="col">Offering</th>
+            <th scope="col">Path</th>
+            <th scope="col">Relationship</th>
+            <th scope="col">Format</th>
+          </tr>
+        </thead>
+        <tbody>
+          {overviewRows.map(([level, offering, path, relationship, format]) => (
+            <tr>
+              <td data-label="Level">{level}</td>
+              <th scope="row" data-label="Offering">{offering}</th>
+              <td data-label="Path">{path}</td>
+              <td data-label="Relationship">{relationship}</td>
+              <td data-label="Format">{format}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="table-note">
+      Personal Protection Care and Ongoing Home Security Care are separate
+      subscriptions. Clients may choose either or both after completing the
+      corresponding prerequisite service.
     </p>
   </section>
 
-  <section class="section shell" aria-labelledby="focus-heading">
-    <p class="eyebrow">Planned focus</p>
-    <h2 id="focus-heading">Where I expect to help.</h2>
-    <div class="services-grid">
-      {focusAreas.map((area) => (
-        <article>
-          <h3>{area.title}</h3>
-          <p>{area.text}</p>
-        </article>
-      ))}
-    </div>
-  </section>
-
-  <section class="section shell contact-section" id="contact">
-    <div class="contact-intro">
-      <p class="eyebrow">Early conversations</p>
-      <h2>Tell me what you’re working through.</h2>
-      <p>
-        VoraSec’s services are still evolving, but I’m open to thoughtful
-        conversations about security problems that align with the work described
-        above. Share enough context to start; sensitive details can wait.
-      </p>
-      <p class="contact-note">
-        Prefer email? <a href="mailto:info@vorasec.com">info@vorasec.com</a>
-      </p>
-    </div>
-
-    <div class="contact-panel">
-      {contactStatus === 'success' && (
-        <p class="form-status success" role="status">
-          Message received. I’ll follow up from info@vorasec.com.
-        </p>
-      )}
-      {contactStatus === 'invalid' && (
-        <p class="form-status error" role="alert">
-          Please review the form and try again.
-        </p>
-      )}
-      {contactStatus === 'verification' && (
-        <p class="form-status error" role="alert">
-          The security check could not be verified. Please try again.
-        </p>
-      )}
-      {contactStatus === 'error' && (
-        <p class="form-status error" role="alert">
-          The message could not be delivered. Please email info@vorasec.com instead.
-        </p>
-      )}
-
-      {turnstileSiteKey ? (
-        <form class="contact-form" method="post" action="/api/contact">
-          <div class="field-row">
-            <label>
-              <span>Name</span>
-              <input name="name" type="text" autocomplete="name" maxlength="120" required />
-            </label>
-            <label>
-              <span>Email</span>
-              <input name="email" type="email" autocomplete="email" maxlength="254" required />
-            </label>
-          </div>
-
-          <label>
-            <span>Organization <small>Optional</small></span>
-            <input name="organization" type="text" autocomplete="organization" maxlength="120" />
-          </label>
-
-          <label>
-            <span>Area of interest</span>
-            <select name="interest" required>
-              <option value="">Select one</option>
-              <option value="Threat intelligence and adversary analysis">Threat intelligence & adversary analysis</option>
-              <option value="Detection engineering and threat hunting">Detection engineering & threat hunting</option>
-              <option value="Incident readiness and investigation">Incident readiness & investigation</option>
-              <option value="SOC workflows and analyst enablement">SOC workflows & analyst enablement</option>
-              <option value="Security automation and applied AI">Security automation & applied AI</option>
-              <option value="Personal security and digital hygiene">Personal security & digital hygiene</option>
-              <option value="Something else">Something else</option>
-            </select>
-          </label>
-
-          <label>
-            <span>What would you like to discuss?</span>
-            <textarea name="message" rows="7" minlength="20" maxlength="5000" required></textarea>
-          </label>
-
-          <label class="honeypot" aria-hidden="true">
-            <span>Website</span>
-            <input name="website" type="text" tabindex="-1" autocomplete="off" />
-          </label>
-
-          <div
-            class="cf-turnstile"
-            data-sitekey={turnstileSiteKey}
-            data-action="contact"
-            data-theme="dark"
-          ></div>
-
-          <button class="button primary submit-button" type="submit">Start a conversation</button>
-          <p class="privacy-note">Your message is emailed to VoraSec and is not stored by this website.</p>
-        </form>
-      ) : (
-        <p class="form-status error">
-          The contact form is temporarily unavailable. Please email
-          <a href="mailto:info@vorasec.com"> info@vorasec.com</a>.
-        </p>
-      )}
-    </div>
-  </section>
-
-  {turnstileSiteKey && (
-    <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
-  )}
+  <ContactSection returnPath="/services" />
 </BaseLayout>
 
 <style>
@@ -189,135 +113,70 @@ const focusAreas = [
     pointer-events: none;
   }
 
-  .services-hero h1,
-  .services-hero > p {
+  .services-hero > * {
     position: relative;
     z-index: 1;
   }
 
-  .services-grid {
+  .path-summary {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 2.5rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
     margin-top: 3rem;
   }
 
-  .services-grid article {
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--line);
+  .path-summary article {
+    padding: 2rem;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.018);
   }
 
-  .contact-section {
-    display: grid;
-    grid-template-columns: 0.8fr 1.2fr;
-    gap: 6rem;
-    align-items: start;
+  .path-summary h3 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
   }
 
-  .contact-intro {
-    max-width: 480px;
+  .path-label {
+    color: var(--b);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
   }
 
-  .contact-note a {
-    color: var(--text);
+  .service-table-wrap {
+    margin-top: 2.5rem;
+    overflow-x: auto;
   }
 
-  .contact-panel {
-    padding-top: 0.4rem;
-  }
-
-  .contact-form,
-  .contact-form label {
-    display: grid;
-    gap: 0.55rem;
-  }
-
-  .contact-form {
-    gap: 1.3rem;
-  }
-
-  .field-row {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.2rem;
-  }
-
-  .contact-form label > span {
-    color: var(--text);
-    font-size: 0.9rem;
-    font-weight: 600;
-  }
-
-  .contact-form small {
-    margin-left: 0.35rem;
-    color: var(--muted);
-    font-weight: 400;
-  }
-
-  .contact-form input,
-  .contact-form select,
-  .contact-form textarea {
+  table {
     width: 100%;
-    border: 1px solid rgba(255, 255, 255, 0.14);
-    border-radius: 4px;
-    background: rgba(255, 255, 255, 0.035);
-    color: var(--text);
-    font: inherit;
-    padding: 0.8rem 0.9rem;
+    border-collapse: collapse;
+    text-align: left;
   }
 
-  .contact-form textarea {
-    resize: vertical;
+  th,
+  td {
+    padding: 1rem 0.9rem;
+    border-bottom: 1px solid var(--line);
+    color: var(--muted);
+    vertical-align: top;
   }
 
-  .contact-form input:focus,
-  .contact-form select:focus,
-  .contact-form textarea:focus {
-    border-color: var(--a);
-    outline: 2px solid rgba(115, 214, 232, 0.16);
-    outline-offset: 2px;
-  }
-
-  .contact-form option {
-    background: var(--bg2);
+  thead th,
+  tbody th {
     color: var(--text);
   }
 
-  .submit-button {
-    width: fit-content;
-    cursor: pointer;
-    font: inherit;
-    white-space: nowrap;
+  thead th {
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
   }
 
-  .privacy-note {
-    margin: -0.35rem 0 0;
-    font-size: 0.82rem;
-  }
-
-  .form-status {
-    margin: 0 0 1.5rem;
-    padding: 0.9rem 1rem;
-    border-left: 2px solid var(--a);
-    background: rgba(115, 214, 232, 0.07);
-  }
-
-  .form-status.error {
-    border-left-color: #f5a7a7;
-    background: rgba(245, 167, 167, 0.07);
-  }
-
-  .form-status a {
-    color: var(--text);
-  }
-
-  .honeypot {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    clip-path: inset(50%);
-    white-space: nowrap;
+  .table-note {
+    max-width: 760px;
+    margin-top: 1.4rem;
+    font-size: 0.9rem;
   }
 
   @media (max-width: 760px) {
@@ -326,11 +185,54 @@ const focusAreas = [
       bottom: 1rem;
     }
 
-    .services-grid,
-    .contact-section,
-    .field-row {
+    .path-summary {
       grid-template-columns: 1fr;
       gap: 2.5rem;
+    }
+
+    .path-summary article {
+      padding: 1.5rem;
+    }
+
+    thead {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+    }
+
+    table,
+    tbody,
+    tr,
+    th,
+    td {
+      display: block;
+      width: 100%;
+    }
+
+    tbody tr {
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    tbody th,
+    tbody td {
+      display: grid;
+      grid-template-columns: 7.5rem 1fr;
+      gap: 0.75rem;
+      padding: 0.35rem 0;
+      border: 0;
+    }
+
+    tbody th::before,
+    tbody td::before {
+      content: attr(data-label);
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
   }
 </style>

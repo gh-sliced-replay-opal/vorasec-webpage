@@ -1,0 +1,272 @@
+---
+const TEST_SITE_KEY = '1x00000000000000000000AA';
+const turnstileSiteKey = Astro.locals.runtime.env.TURNSTILE_SITE_KEY
+  || (import.meta.env.DEV ? TEST_SITE_KEY : '');
+const contactStatus = Astro.url.searchParams.get('contact');
+
+interface Props {
+  returnPath: '/services' | '/services/personal-protection' | '/services/home-network-protection';
+  eyebrow?: string;
+  title?: string;
+  description?: string;
+}
+
+const {
+  returnPath,
+  eyebrow = 'Start a conversation',
+  title = 'Tell us what happened—or what you want to protect.',
+  description = 'We will recommend the smallest service that appropriately addresses the need. Share enough context to start; sensitive details can wait.',
+} = Astro.props;
+
+const currentClientOptions = [
+  ['Current Client - Scam Concierge', 'Scam Concierge'],
+  ['Current Client - Breached or Compromised Account', 'Breached or Compromised Account'],
+  ['Current Client - Home Network Support', 'Home Network Support'],
+];
+
+const inquiryOptions = [
+  ['Help me choose', 'Help Me Choose'],
+  ['Level 1 - Personal Cybersecurity Essentials', 'Level 1 — Personal Cybersecurity Essentials'],
+  ['Level 2 - Account, Identity and Privacy Protection', 'Level 2 — Account, Identity & Privacy Protection'],
+  ['Level 3 - Home and Identity Exposure Review', 'Level 3 — Home & Identity Exposure Review'],
+  ['Personal Protection Care', 'Personal Protection Care'],
+  ['Level 4 - Secure Home Network Deployment', 'Level 4 — Secure Home Network Deployment'],
+  ['Level 5 - Ongoing Home Security Care', 'Level 5 — Ongoing Home Security Care'],
+  ['Group Cybersecurity Education', 'Group Cybersecurity Education'],
+  ['Digital Legacy Planning Upgrade', 'Digital Legacy Planning Upgrade'],
+  ['General Inquiry', 'General Inquiry'],
+];
+---
+
+<section class="section shell contact-section" id="contact">
+  <div class="contact-intro">
+    <p class="eyebrow">{eyebrow}</p>
+    <h2>{title}</h2>
+    <p>{description}</p>
+    <p class="sensitive-note">
+      Please do not send passwords, PINs, recovery codes, Social Security numbers,
+      payment-card details, or other sensitive credentials through this form.
+    </p>
+    <p class="contact-note">
+      Prefer email? <a href="mailto:info@vorasec.com">info@vorasec.com</a>
+    </p>
+  </div>
+
+  <div class="contact-panel">
+    {contactStatus === 'success' && (
+      <p class="form-status success" role="status">
+        Message received. We’ll follow up from info@vorasec.com.
+      </p>
+    )}
+    {contactStatus === 'invalid' && (
+      <p class="form-status error" role="alert">
+        Please review the form and try again.
+      </p>
+    )}
+    {contactStatus === 'verification' && (
+      <p class="form-status error" role="alert">
+        The security check could not be verified. Please try again.
+      </p>
+    )}
+    {contactStatus === 'error' && (
+      <p class="form-status error" role="alert">
+        The message could not be delivered. Please email info@vorasec.com instead.
+      </p>
+    )}
+
+    {turnstileSiteKey ? (
+      <form class="contact-form" method="post" action="/api/contact">
+        <input name="returnTo" type="hidden" value={returnPath} />
+
+        <div class="field-row">
+          <label>
+            <span>Name</span>
+            <input name="name" type="text" autocomplete="name" maxlength="120" required />
+          </label>
+          <label>
+            <span>Email</span>
+            <input name="email" type="email" autocomplete="email" maxlength="254" required />
+          </label>
+        </div>
+
+        <label>
+          <span>Household or group <small>Optional</small></span>
+          <input name="household" type="text" maxlength="120" />
+        </label>
+
+        <label>
+          <span>What can we help with?</span>
+          <select name="interest" required>
+            <option value="">Select one</option>
+            <optgroup label="Current clients">
+              {currentClientOptions.map(([value, label]) => <option value={value}>{label}</option>)}
+            </optgroup>
+            <optgroup label="New inquiries">
+              {inquiryOptions.map(([value, label]) => <option value={value}>{label}</option>)}
+            </optgroup>
+          </select>
+        </label>
+
+        <label>
+          <span>What would you like us to know?</span>
+          <textarea name="message" rows="7" minlength="20" maxlength="5000" required></textarea>
+        </label>
+
+        <label class="honeypot" aria-hidden="true">
+          <span>Website</span>
+          <input name="website" type="text" tabindex="-1" autocomplete="off" />
+        </label>
+
+        <div
+          class="cf-turnstile"
+          data-sitekey={turnstileSiteKey}
+          data-action="contact"
+          data-theme="dark"
+        ></div>
+
+        <button class="button primary submit-button" type="submit">Start a conversation</button>
+        <p class="privacy-note">Your message is emailed to VoraSec and is not stored by this website.</p>
+      </form>
+    ) : (
+      <p class="form-status error">
+        The contact form is temporarily unavailable. Please email
+        <a href="mailto:info@vorasec.com"> info@vorasec.com</a>.
+      </p>
+    )}
+  </div>
+</section>
+
+{turnstileSiteKey && (
+  <script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+)}
+
+<style>
+  .contact-section {
+    display: grid;
+    grid-template-columns: 0.8fr 1.2fr;
+    gap: 6rem;
+    align-items: start;
+  }
+
+  .contact-intro {
+    max-width: 480px;
+  }
+
+  .contact-note a {
+    color: var(--text);
+    text-underline-offset: 0.2rem;
+  }
+
+  .sensitive-note {
+    padding-left: 1rem;
+    border-left: 1px solid rgba(245, 167, 167, 0.55);
+    font-size: 0.9rem;
+  }
+
+  .contact-panel {
+    padding-top: 0.4rem;
+  }
+
+  .contact-form,
+  .contact-form label {
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .contact-form {
+    gap: 1.3rem;
+  }
+
+  .field-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem;
+  }
+
+  .contact-form label > span {
+    color: var(--text);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  .contact-form small {
+    margin-left: 0.35rem;
+    color: var(--muted);
+    font-weight: 400;
+  }
+
+  .contact-form input,
+  .contact-form select,
+  .contact-form textarea {
+    width: 100%;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.035);
+    color: var(--text);
+    font: inherit;
+    padding: 0.8rem 0.9rem;
+  }
+
+  .contact-form textarea {
+    resize: vertical;
+  }
+
+  .contact-form input:focus,
+  .contact-form select:focus,
+  .contact-form textarea:focus {
+    border-color: var(--a);
+    outline: 2px solid rgba(115, 214, 232, 0.16);
+    outline-offset: 2px;
+  }
+
+  .contact-form option,
+  .contact-form optgroup {
+    background: var(--bg2);
+    color: var(--text);
+  }
+
+  .submit-button {
+    width: fit-content;
+    cursor: pointer;
+    font: inherit;
+    white-space: nowrap;
+  }
+
+  .privacy-note {
+    margin: -0.35rem 0 0;
+    font-size: 0.82rem;
+  }
+
+  .form-status {
+    margin: 0 0 1.5rem;
+    padding: 0.9rem 1rem;
+    border-left: 2px solid var(--a);
+    background: rgba(115, 214, 232, 0.07);
+  }
+
+  .form-status.error {
+    border-left-color: #f5a7a7;
+    background: rgba(245, 167, 167, 0.07);
+  }
+
+  .form-status a {
+    color: var(--text);
+  }
+
+  .honeypot {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  @media (max-width: 760px) {
+    .contact-section,
+    .field-row {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+  }
+</style>

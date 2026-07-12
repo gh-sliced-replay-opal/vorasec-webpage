@@ -6,13 +6,24 @@ const CONTACT_TO = 'info@vorasec.com';
 const CONTACT_FROM = 'website@forms.vorasec.com';
 const TEST_SECRET_KEY = '1x0000000000000000000000000000000AA';
 const ALLOWED_INTERESTS = new Set([
-  'Threat intelligence and adversary analysis',
-  'Detection engineering and threat hunting',
-  'Incident readiness and investigation',
-  'SOC workflows and analyst enablement',
-  'Security automation and applied AI',
-  'Personal security and digital hygiene',
-  'Something else',
+  'Help me choose',
+  'Level 1 - Personal Cybersecurity Essentials',
+  'Level 2 - Account, Identity and Privacy Protection',
+  'Level 3 - Home and Identity Exposure Review',
+  'Personal Protection Care',
+  'Level 4 - Secure Home Network Deployment',
+  'Level 5 - Ongoing Home Security Care',
+  'Group Cybersecurity Education',
+  'Digital Legacy Planning Upgrade',
+  'Current Client - Scam Concierge',
+  'Current Client - Breached or Compromised Account',
+  'Current Client - Home Network Support',
+  'General Inquiry',
+]);
+const ALLOWED_RETURN_PATHS = new Set([
+  '/services',
+  '/services/personal-protection',
+  '/services/home-network-protection',
 ]);
 
 interface TurnstileResult {
@@ -50,8 +61,9 @@ const escapeHtml = (value: string) => value.replace(/[&<>'"]/g, (character) => (
   '"': '&quot;',
 })[character] ?? character);
 
-const redirectToServices = (request: Request, status: string) => {
-  const destination = new URL('/services', request.url);
+const redirectToContact = (request: Request, status: string, requestedPath = '') => {
+  const returnPath = ALLOWED_RETURN_PATHS.has(requestedPath) ? requestedPath : '/services';
+  const destination = new URL(returnPath, request.url);
   destination.searchParams.set('contact', status);
   destination.hash = 'contact';
   return Response.redirect(destination, 303);
@@ -68,17 +80,19 @@ export const POST: APIRoute = async ({ request, locals }) => {
   try {
     form = await request.formData();
   } catch {
-    return redirectToServices(request, 'invalid');
+    return redirectToContact(request, 'invalid');
   }
+
+  const returnTo = readField(form, 'returnTo');
 
   // Silently accept automated submissions that fill the hidden field.
   if (readField(form, 'website')) {
-    return redirectToServices(request, 'success');
+    return redirectToContact(request, 'success', returnTo);
   }
 
   const name = readField(form, 'name');
   const email = readField(form, 'email').toLowerCase();
-  const organization = readField(form, 'organization');
+  const household = readField(form, 'household');
   const interest = readField(form, 'interest');
   const message = readField(form, 'message');
   const turnstileToken = readField(form, 'cf-turnstile-response');
@@ -88,14 +102,14 @@ export const POST: APIRoute = async ({ request, locals }) => {
     && name.length <= 120
     && email.length <= 254
     && emailIsValid
-    && organization.length <= 120
+    && household.length <= 120
     && ALLOWED_INTERESTS.has(interest)
     && message.length >= 20
     && message.length <= 5000
     && turnstileToken.length > 0;
 
   if (!fieldsAreValid) {
-    return redirectToServices(request, 'invalid');
+    return redirectToContact(request, 'invalid', returnTo);
   }
 
   const env = locals.runtime.env as unknown as ContactEnv;
@@ -103,7 +117,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
     || (import.meta.env.DEV ? TEST_SECRET_KEY : '');
 
   if (!turnstileSecret || !env.CONTACT_EMAIL) {
-    return redirectToServices(request, 'error');
+    return redirectToContact(request, 'error', returnTo);
   }
 
   const verificationBody = new FormData();
@@ -119,22 +133,22 @@ export const POST: APIRoute = async ({ request, locals }) => {
     );
     verification = await verificationResponse.json() as TurnstileResult;
   } catch {
-    return redirectToServices(request, 'verification');
+    return redirectToContact(request, 'verification', returnTo);
   }
 
   const usingTestSecret = turnstileSecret === TEST_SECRET_KEY;
   const hostnameMatches = verification.hostname === requestUrl.hostname;
   const productionMetadataMatches = hostnameMatches && verification.action === 'contact';
   if (!verification.success || (!usingTestSecret && !productionMetadataMatches)) {
-    return redirectToServices(request, 'verification');
+    return redirectToContact(request, 'verification', returnTo);
   }
 
   const safeName = escapeHtml(name);
   const safeEmail = escapeHtml(email);
-  const safeOrganization = escapeHtml(organization || 'Not provided');
+  const safeHousehold = escapeHtml(household || 'Not provided');
   const safeInterest = escapeHtml(interest);
   const safeMessage = escapeHtml(message).replace(/\n/g, '<br />');
-  const organizationLine = organization || 'Not provided';
+  const householdLine = household || 'Not provided';
 
   try {
     await env.CONTACT_EMAIL.send({
@@ -145,7 +159,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
       text: [
         `Name: ${name}`,
         `Email: ${email}`,
-        `Organization: ${organizationLine}`,
+        `Household or group: ${householdLine}`,
         `Area of interest: ${interest}`,
         '',
         message,
@@ -154,16 +168,16 @@ export const POST: APIRoute = async ({ request, locals }) => {
         '<h1>New VoraSec inquiry</h1>',
         `<p><strong>Name:</strong> ${safeName}<br />`,
         `<strong>Email:</strong> ${safeEmail}<br />`,
-        `<strong>Organization:</strong> ${safeOrganization}<br />`,
+        `<strong>Household or group:</strong> ${safeHousehold}<br />`,
         `<strong>Area of interest:</strong> ${safeInterest}</p>`,
         `<p>${safeMessage}</p>`,
       ].join(''),
     });
   } catch {
-    return redirectToServices(request, 'error');
+    return redirectToContact(request, 'error', returnTo);
   }
 
-  return redirectToServices(request, 'success');
+  return redirectToContact(request, 'success', returnTo);
 };
 
 export const ALL: APIRoute = () => new Response('Method not allowed', {

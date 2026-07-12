@@ -1,0 +1,210 @@
+---
+import ContactSection from '../../components/ContactSection.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export const prerender = false;
+---
+
+<BaseLayout
+  title="Home Network Protection Services | VoraSec"
+  description="Secure UniFi home-network design, deployment, and ongoing professional care for connected households."
+>
+  <section class="hero shell network-hero">
+    <p class="eyebrow">Home Network Protection</p>
+    <h1>A safer foundation for everything connected at home.</h1>
+    <p>
+      We design and deploy secure UniFi-based home networks, then offer continued
+      professional care for households that do not want to manage network security
+      themselves.
+    </p>
+    <div class="buttons">
+      <a class="button primary" href="#level-4">Explore network services</a>
+      <a class="button" href="#contact">Talk with VoraSec</a>
+    </div>
+  </section>
+
+  <section class="section shell service-track" aria-labelledby="network-heading">
+    <div class="track-heading">
+      <p class="eyebrow">Levels 4–5</p>
+      <h2 id="network-heading">Build the network, then choose whether we maintain it.</h2>
+      <p>Level 4 establishes the secure foundation. Level 5 is an optional care plan available afterward.</p>
+    </div>
+
+    <div class="service-list">
+      <article class="service-block" id="level-4">
+        <div class="service-heading">
+          <p class="service-level">Level 4</p>
+          <div>
+            <h3>Secure Home Network Deployment</h3>
+            <p class="tagline">A professionally configured network designed around your household.</p>
+          </div>
+        </div>
+        <div class="service-body">
+          <p>
+            We design and deploy a UniFi-based network built around your devices,
+            privacy needs, coverage requirements, and daily routines.
+          </p>
+          <h4>Included</h4>
+          <ul>
+            <li>Equipment assessment and recommendations</li>
+            <li>Gateway and wireless-access-point configuration</li>
+            <li>Secure administrator access</li>
+            <li>Separate networks for personal devices, guests, smart-home equipment, and cameras where appropriate</li>
+            <li>Firewall, device-isolation, and access rules</li>
+            <li>Intrusion detection and prevention</li>
+            <li>Secure Wi-Fi configuration, automatic updates, and configuration backups</li>
+            <li>Network documentation and a client walkthrough</li>
+          </ul>
+          <p class="scope-note">
+            You retain ownership of the equipment, account, and configuration.
+            Hardware, advanced cabling, electrical work, travel, and third-party
+            subscriptions are priced separately where applicable.
+          </p>
+        </div>
+      </article>
+
+      <article class="service-block" id="level-5">
+        <div class="service-heading">
+          <p class="service-level">Level 5</p>
+          <div>
+            <h3>Ongoing Home Security Care</h3>
+            <p class="tagline">Continued professional attention without managing network security yourself.</p>
+          </div>
+        </div>
+        <div class="service-body care-options">
+          <p>Available after Level 4, with two service options.</p>
+          <div>
+            <section>
+              <h4>Quarterly Care</h4>
+              <ul>
+                <li>A comprehensive network tune-up every three months</li>
+                <li>Review of firmware, configuration, exposed services, device health, and important alerts</li>
+                <li>Plain-language findings and recommended actions</li>
+                <li>Scheduled assistance with routine security-related changes</li>
+              </ul>
+            </section>
+            <section>
+              <h4>Weekly Care</h4>
+              <ul>
+                <li>Weekly review of important alerts, exposure, and network health</li>
+                <li>Faster scheduled assistance</li>
+                <li>Routine configuration maintenance within the plan’s scope</li>
+                <li>Periodic plain-language security summaries</li>
+              </ul>
+            </section>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section shell cross-link">
+    <p class="eyebrow">Also available</p>
+    <h2>Looking for account, identity, privacy, or scam protection?</h2>
+    <a class="button" href="/services/personal-protection">Explore Personal Protection</a>
+  </section>
+
+  <ContactSection
+    returnPath="/services/home-network-protection"
+    title="Tell us about your home and what is connected."
+    description="Share what you use today, what concerns you, and whether you are considering a new network or ongoing care. We will follow up before requesting technical details."
+  />
+</BaseLayout>
+
+<style>
+  .network-hero,
+  .track-heading {
+    max-width: 880px;
+  }
+
+  .service-list {
+    margin-top: 3rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .service-block {
+    display: grid;
+    grid-template-columns: 0.75fr 1.25fr;
+    gap: 5rem;
+    padding: 3.5rem 0;
+    border-bottom: 1px solid var(--line);
+    scroll-margin-top: 6rem;
+  }
+
+  .service-heading {
+    display: grid;
+    grid-template-columns: 5rem 1fr;
+    gap: 1.2rem;
+    align-content: start;
+  }
+
+  .service-heading h3 {
+    margin-top: 0;
+    font-size: clamp(1.7rem, 3.4vw, 2.45rem);
+  }
+
+  .service-level {
+    margin: 0.15rem 0 0;
+    color: var(--b);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .tagline {
+    margin-top: 0.7rem;
+    color: var(--text);
+  }
+
+  .service-body > p:first-child {
+    margin-top: 0;
+  }
+
+  .service-block h4 {
+    margin: 1.7rem 0 0.75rem;
+    color: var(--text);
+    font-size: 0.92rem;
+  }
+
+  .service-block ul {
+    margin: 0;
+    padding-left: 1.25rem;
+    color: var(--muted);
+  }
+
+  .service-block li {
+    margin: 0.55rem 0;
+  }
+
+  .scope-note {
+    margin-top: 1.6rem;
+    padding-left: 1rem;
+    border-left: 1px solid var(--line);
+    font-size: 0.9rem;
+  }
+
+  .care-options > div {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+
+  .cross-link {
+    max-width: 820px;
+    margin-left: max(1.25rem, calc((100vw - var(--max)) / 2));
+  }
+
+  @media (max-width: 760px) {
+    .service-block,
+    .care-options > div {
+      grid-template-columns: 1fr;
+      gap: 2.5rem;
+    }
+
+    .service-heading {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+  }
+</style>

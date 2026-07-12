@@ -1,25 +1,38 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-const areas = [
-  ['Cyber Threat Intelligence', 'Adversary tracking, TTP analysis, IOC development, and intelligence reporting that helps defenders act.'],
-  ['Detection & Incident Response', 'Detection development, incident triage, malware analysis, containment, and clear threat intelligence reporting for technical teams and stakeholders.'],
-  ['Analyst Enablement & Automation', 'Training, repeatable workflows, and responsible automation that help analysts work with more context and confidence.'],
+
+const concerns = [
+  {
+    title: 'Accounts & identity',
+    text: 'Secure important accounts, strengthen recovery options, reduce unnecessary public exposure, and prepare your household to recognize financial and impersonation scams.',
+  },
+  {
+    title: 'Scams & suspicious messages',
+    text: 'Get a trusted second opinion before responding to an email, text, call, website, invoice, or online request that does not feel right.',
+  },
+  {
+    title: 'Home networks',
+    text: 'Replace one shared Wi-Fi network with a professionally configured system that separates personal devices, guests, cameras, and connected home technology.',
+  },
 ];
-const impact = [
-  'Helped uncover and disrupt a software supply-chain attack distributing SeroXen malware through a NuGet repository with more than two million downloads.',
-  'Trusted to lead threat intelligence analysis and train analysts on adversary tactics, techniques, and procedures.',
-  'Developed signatures and intelligence used to identify and track sophisticated threat actor activity.',
+
+const principles = [
+  ['Plain-language guidance', 'We explain what we find, why it matters, and what we recommend without expecting you to speak cybersecurity.'],
+  ['Permission at every step', 'We only inspect accounts, information, devices, and networks you have authorized us to review.'],
+  ['Protection you own', 'Your accounts, equipment, configurations, and documentation remain yours.'],
+  ['Priorities you can act on', 'We separate urgent concerns from sensible improvements so you know what to address first.'],
 ];
 ---
+
 <BaseLayout
-  title="David | Cybersecurity, Technology & AI"
-  description="David's work in cyber threat intelligence, intrusion analysis, incident response, detection engineering, and security automation."
+  title="VoraSec | Personal & Home Cybersecurity"
+  description="Practical cybersecurity for individuals and families, including account and identity protection, scam support, exposure reviews, secure home networks, and ongoing care."
 >
   <section class="hero brand-hero shell">
     <img
       class="hero-logo"
       src="/vorasec-logo.png"
-      alt="VORASEC"
+      alt="VoraSec"
       width="720"
       height="720"
       decoding="async"
@@ -27,26 +40,81 @@ const impact = [
     />
 
     <div class="hero-copy">
-      <p class="eyebrow">Cyber Threat Intelligence · Intrusion Analysis · Incident Response</p>
-      <h1>I identify active intrusions, connect adversary behavior across data, and turn raw telemetry into action.</h1>
+      <p class="eyebrow">Personal & home cybersecurity</p>
+      <h1>Protect the digital life you’ve built.</h1>
       <p>
-        I’m David, a military veteran and cybersecurity professional with experience
-        across government, enterprise security, and global managed detection and
-        response. My work spans threat intelligence, threat actor tracking, detection
-        development, malware analysis, incident response, and analyst enablement.
+        We help individuals and families secure the accounts, personal information,
+        and home technology they rely on every day. Our services combine clear
+        guidance, hands-on protection, and ongoing support—without fear-based
+        selling or enterprise jargon.
       </p>
       <div class="buttons">
-        <a class="button primary" href="/about">About my work</a>
-        <a class="button" href="/services">Explore VoraSec services</a>
+        <a class="button primary" href="/services">Explore our services</a>
+        <a class="button" href="/services#contact">Talk with VoraSec</a>
       </div>
     </div>
   </section>
 
-  <section class="section shell">
-    <p class="eyebrow">What I work on</p>
-    <h2>Security with an operator’s perspective.</h2>
-    <div class="grid">
-      {areas.map(([title, text]) => (
+  <section class="section shell" aria-labelledby="real-life-heading">
+    <p class="eyebrow">Security for real life</p>
+    <h2 id="real-life-heading">Your risks do not stop at a password.</h2>
+    <p class="section-lede">
+      A suspicious message, exposed personal information, compromised email account,
+      or poorly secured home network can affect far more than one device. We help you
+      understand what matters, fix what can be fixed, and build protection that fits
+      your household.
+    </p>
+    <div class="concern-grid">
+      {concerns.map((concern) => (
+        <article>
+          <h3>{concern.title}</h3>
+          <p>{concern.text}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section shell" aria-labelledby="paths-heading">
+    <p class="eyebrow">Two ways we protect your household</p>
+    <h2 id="paths-heading">Start with the part of your digital life that needs attention.</h2>
+    <div class="path-grid">
+      <article>
+        <p class="path-label">Personal protection</p>
+        <h3>Protect your accounts, identity, and privacy.</h3>
+        <p>
+          Our stackable personal services begin with practical education, then add
+          hands-on account, identity, privacy, and exposure protection. Ongoing care
+          is available after the initial setup.
+        </p>
+        <ul>
+          <li>Personal Cybersecurity Essentials</li>
+          <li>Account, Identity & Privacy Protection</li>
+          <li>Home & Identity Exposure Review</li>
+          <li>Personal Protection Care</li>
+        </ul>
+        <a class="button" href="/services/personal-protection">Explore personal protection</a>
+      </article>
+      <article>
+        <p class="path-label">Home network protection</p>
+        <h3>Build a safer foundation for everything connected at home.</h3>
+        <p>
+          We design and deploy secure UniFi-based home networks, then offer ongoing
+          care for households that want continued reviews, maintenance, and support.
+        </p>
+        <ul>
+          <li>Secure Home Network Deployment</li>
+          <li>Ongoing Home Security Care</li>
+        </ul>
+        <a class="button" href="/services/home-network-protection">Explore home network protection</a>
+      </article>
+    </div>
+  </section>
+
+  <section class="section shell" aria-labelledby="expect-heading">
+    <p class="eyebrow">What to expect</p>
+    <h2 id="expect-heading">Clear recommendations. Careful work. You remain in control.</h2>
+    <div class="principles-grid">
+      {principles.map(([title, text]) => (
         <article>
           <h3>{title}</h3>
           <p>{text}</p>
@@ -55,24 +123,33 @@ const impact = [
     </div>
   </section>
 
-  <section class="section shell impact">
-    <p class="eyebrow">Selected impact</p>
-    <h2>Evidence from the work.</h2>
-    <div class="impact-grid">
-      {impact.map((item) => (
-        <article><p>{item}</p></article>
-      ))}
+  <section class="section shell founder" aria-labelledby="founder-heading">
+    <div>
+      <p class="eyebrow">Experience behind VoraSec</p>
+      <h2 id="founder-heading">Built by someone who has handled real security incidents.</h2>
+    </div>
+    <div>
+      <p>
+        VoraSec was founded by David, a military veteran and cybersecurity
+        professional with experience across government, enterprise security, and
+        global managed detection and response. His background includes incident
+        response, malware analysis, detection engineering, and cyber threat intelligence.
+      </p>
+      <p>
+        David holds a master’s degree in Cybersecurity and Information Assurance and
+        the GIAC Certified Incident Handler credential, among other certifications.
+      </p>
+      <a class="button" href="/about">Meet the founder and learn about his work</a>
     </div>
   </section>
 
-  <section class="section shell project">
-    <p class="eyebrow">Current project</p>
-    <h2>AI-powered cyber briefings</h2>
-    <p>
-      An automated pipeline that collects trusted reporting, prioritizes
-      exploited vulnerabilities, and delivers a concise audio briefing.
-    </p>
-    <a class="button" href="/podcast">Explore the project</a>
+  <section class="section shell final-cta">
+    <p class="eyebrow">Start with what needs protecting</p>
+    <h2>Tell us what concerns you. We’ll help identify the right place to begin.</h2>
+    <div class="buttons">
+      <a class="button primary" href="/services">View all services</a>
+      <a class="button" href="/services#contact">Contact VoraSec</a>
+    </div>
   </section>
 </BaseLayout>
 
@@ -122,25 +199,78 @@ const impact = [
     pointer-events: none;
   }
 
-  .project {
+  .section-lede {
     max-width: 760px;
-    margin-left: max(1.25rem, calc((100vw - var(--max)) / 2));
+    font-size: 1.08rem;
   }
 
-  .impact-grid {
+  .concern-grid,
+  .principles-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 2.5rem;
     margin-top: 3rem;
   }
 
-  .impact-grid article {
+  .concern-grid article,
+  .principles-grid article {
     padding-top: 1.5rem;
     border-top: 1px solid var(--line);
   }
 
-  .impact-grid p {
-    margin-top: 0;
+  .principles-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .path-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+
+  .path-grid article {
+    padding: 2rem;
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.018);
+  }
+
+  .path-grid h3 {
+    max-width: 420px;
+    font-size: clamp(1.55rem, 3vw, 2.15rem);
+  }
+
+  .path-grid ul {
+    margin: 1.5rem 0;
+    padding-left: 1.2rem;
+    color: var(--muted);
+  }
+
+  .path-grid li {
+    margin: 0.5rem 0;
+  }
+
+  .path-label {
+    color: var(--b);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .founder {
+    display: grid;
+    grid-template-columns: 0.85fr 1.15fr;
+    gap: 6rem;
+  }
+
+  .founder p {
+    max-width: 680px;
+  }
+
+  .final-cta {
+    max-width: 900px;
+    margin-left: max(1.25rem, calc((100vw - var(--max)) / 2));
   }
 
   @media (max-width: 760px) {
@@ -161,9 +291,16 @@ const impact = [
       opacity: 0.3;
     }
 
-    .impact-grid {
+    .concern-grid,
+    .principles-grid,
+    .path-grid,
+    .founder {
       grid-template-columns: 1fr;
+      gap: 2.5rem;
     }
 
+    .path-grid article {
+      padding: 1.5rem;
+    }
   }
 </style>
