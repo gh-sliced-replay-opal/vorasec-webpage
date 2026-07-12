@@ -8,104 +8,85 @@ const skills = [
   'Incident Response',
   'Malware Analysis',
   'Threat Hunting',
-  'Threat Intelligence Reporting',
+  'Intelligence Reporting',
   'Analyst Training',
   'Security Automation',
 ];
 
-const impact = [
-  {
-    title: 'Supply-chain investigation',
-    text: 'Helped uncover a malicious NuGet package distributing SeroXen malware, contributing to its takedown and protecting a repository with more than two million downloads.',
-  },
-  {
-    title: 'Threat intelligence leadership',
-    text: 'Trusted to lead intelligence analysis, train new analysts on adversary TTPs, and share actionable reporting with government and industry stakeholders.',
-  },
-  {
-    title: 'Adversary tracking',
-    text: 'Developed signatures, indicators, and analytical findings used to identify and track sophisticated malicious activity across multiple data sources.',
-  },
-  {
-    title: 'Operational recognition',
-    text: 'Recognized by a government client for an instrumental role in collaborative cyber efforts and presented with a challenge coin.',
-  },
-];
 ---
 
 <BaseLayout
-  title="About | David"
-  description="David's background in cyber threat intelligence, intrusion analysis, managed detection and response, malware analysis, and detection engineering."
+  title="About VoraSec | Practical Cybersecurity for Individuals & Families"
+  description="Learn why VoraSec brings experience from incident response, threat intelligence, malware analysis, and managed detection to personal and home cybersecurity."
 >
   <section class="hero shell about-hero">
-    <p class="eyebrow">About me</p>
-    <h1>From frontline response to threat intelligence leadership.</h1>
+    <p class="eyebrow">About VoraSec</p>
+    <h1>Serious cybersecurity, made practical for everyday life.</h1>
     <p>
-      I’m a military veteran and cybersecurity professional whose career has
-      progressed from enterprise security operations and incident response into
-      managed detection, malware analysis, detection engineering, and cyber threat
-      intelligence.
+      We bring lessons from real investigations, incident response, and threat
+      intelligence to the accounts, identities, and technology people depend on at home.
     </p>
   </section>
 
   <section class="section shell story">
     <article>
-      <p class="eyebrow">Career perspective</p>
-      <h2>Built through investigations, decisions, and shared intelligence.</h2>
+      <p class="eyebrow">Why VoraSec exists</p>
+      <h2>Most people are expected to manage risks they were never taught to see.</h2>
       <p>
-        I began by investigating events across EDR, SIEM, network, and threat
-        intelligence sources. That foundation taught me how to preserve evidence,
-        determine what matters during an intrusion, communicate clearly under
-        pressure, and make containment decisions with incomplete information.
+        Personal email now unlocks financial accounts. Public information can help a
+        criminal impersonate a family member. A home network may connect work
+        computers, cameras, televisions, appliances, and children’s devices without
+        meaningful separation.
       </p>
       <p>
-        At CrowdStrike, I investigated malicious activity across multiple operating
-        systems, analyzed malware, guided junior analysts through escalations, and
-        served on a senior analyst team supporting a 150-person MDR operation. One
-        investigation uncovered a malicious NuGet package distributing SeroXen
-        malware and contributed directly to its takedown.
+        Generic advice rarely tells someone what to do with the technology and
+        circumstances in front of them. We created VoraSec to close that gap with
+        practical education, hands-on protection, and a trusted source of help when
+        something does not look right.
       </p>
       <p>
-        Today, my work focuses on sophisticated adversaries. I correlate large
-        datasets, develop signatures for tracking malicious activity, produce and
-        share actionable threat intelligence reports, and help analysts understand
-        adversary tactics, techniques, and procedures.
+        We do not sell fear or bury people in technical language. We explain what
+        matters, make changes with permission, document what was done, and leave every
+        client in control of their technology.
       </p>
     </article>
   </section>
 
-  <section class="section shell">
-    <p class="eyebrow">Selected impact</p>
-    <h2>Work that changed an outcome.</h2>
-    <div class="impact-grid">
-      {impact.map((item) => (
-        <article>
-          <h3>{item.title}</h3>
-          <p>{item.text}</p>
-        </article>
-      ))}
+  <section class="section shell founder-story">
+    <div>
+      <p class="eyebrow">Founder</p>
+      <h2>David — military veteran and cybersecurity practitioner.</h2>
     </div>
-  </section>
-
-  <section class="section shell about">
     <article>
-      <p class="eyebrow">My approach</p>
-      <h2>Practical security over security theater.</h2>
       <p>
-        Good systems should reduce uncertainty, preserve evidence, fail visibly,
-        and give an operator enough context to make a sound decision. Intelligence
-        should be useful to the people receiving it—not merely technically correct.
+        David founded VoraSec after building a career across enterprise security
+        operations, incident response, managed detection, malware analysis, detection
+        engineering, and cyber threat intelligence.
       </p>
       <p>
-        Outside of security work, I build home-lab infrastructure and study how
-        automation and AI can improve analyst workflows without hiding source
-        material, assumptions, or failure modes.
+        He began by investigating activity across endpoint, network, security-monitoring,
+        and threat-intelligence sources. That experience taught him how to preserve
+        evidence, separate meaningful signals from background noise, communicate clearly
+        under pressure, and make sound decisions with incomplete information.
+      </p>
+      <p>
+        At CrowdStrike, David investigated malicious activity across multiple operating
+        systems, analyzed malware, guided junior analysts through escalations, and served
+        on a senior analyst team supporting a 150-person managed detection and response
+        operation. One investigation helped uncover a malicious NuGet package distributing
+        SeroXen malware and contributed to its takedown.
+      </p>
+      <p>
+        His subsequent work has focused on sophisticated adversaries: correlating large
+        datasets, developing signatures used to track malicious activity, producing
+        actionable intelligence, and training analysts to understand adversary behavior.
+      </p>
+      <p>
+        VoraSec applies that same investigative discipline at a human scale—helping
+        individuals and families make better security decisions before and after
+        something goes wrong.
       </p>
     </article>
-    <aside>
-      <p class="eyebrow">Core areas</p>
-      <ul class="tags">{skills.map((skill) => <li>{skill}</li>)}</ul>
-    </aside>
   </section>
 
   <section class="section shell credentials">
@@ -122,34 +103,45 @@ const impact = [
       <p>CompTIA PenTest+ · CySA+ · Security+</p>
     </article>
   </section>
+
+  <section class="section shell expertise">
+    <p class="eyebrow">Professional areas</p>
+    <ul class="tags">{skills.map((skill) => <li>{skill}</li>)}</ul>
+  </section>
+
+  <section class="section shell final-cta">
+    <p class="eyebrow">Personal & home protection</p>
+    <h2>See how VoraSec can help protect your household.</h2>
+    <p>
+      Explore one-time services for personal and home security or ongoing care for
+      continued monitoring and support.
+    </p>
+    <div class="buttons">
+      <a class="button primary" href="/services">Explore services</a>
+      <a class="button" href="/services#contact">Contact VoraSec</a>
+    </div>
+  </section>
 </BaseLayout>
 
 <style>
   .about-hero,
   .story article {
-    max-width: 860px;
+    max-width: 880px;
   }
 
-  .impact-grid {
+  .founder-story {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 3rem;
-    margin-top: 3rem;
-  }
-
-  .impact-grid article {
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--line);
-  }
-
-  .about {
-    display: grid;
-    grid-template-columns: 1.4fr 0.8fr;
+    grid-template-columns: 0.75fr 1.25fr;
     gap: 6rem;
+    align-items: start;
   }
 
-  .about article {
-    max-width: 680px;
+  .founder-story article {
+    max-width: 720px;
+  }
+
+  .founder-story article p:first-child {
+    margin-top: 0;
   }
 
   .credentials {
@@ -167,9 +159,18 @@ const impact = [
     color: var(--text);
   }
 
+  .expertise {
+    max-width: 860px;
+    margin-left: max(1.25rem, calc((100vw - var(--max)) / 2));
+  }
+
+  .final-cta {
+    max-width: 860px;
+    margin-left: max(1.25rem, calc((100vw - var(--max)) / 2));
+  }
+
   @media (max-width: 760px) {
-    .impact-grid,
-    .about,
+    .founder-story,
     .credentials {
       grid-template-columns: 1fr;
       gap: 3rem;
