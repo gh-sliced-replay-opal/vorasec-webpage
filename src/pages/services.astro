@@ -5,12 +5,54 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 export const prerender = false;
 
 const overviewRows = [
-  ['Level 1', 'Personal Cybersecurity Essentials', 'Personal protection', 'Foundation', 'One-time'],
-  ['Level 2', 'Account, Identity & Privacy Protection', 'Personal protection', 'Includes Level 1', 'One-time'],
-  ['Level 3', 'Home & Identity Exposure Review', 'Personal protection', 'Includes Levels 1–2', 'One-time'],
-  ['Care', 'Personal Protection Care', 'Personal protection', 'Requires Level 2 or 3', 'Subscription'],
-  ['Level 4', 'Secure Home Network Deployment', 'Home network', 'Foundation', 'One-time'],
-  ['Level 5', 'Ongoing Home Security Care', 'Home network', 'Requires Level 4', 'Quarterly or weekly'],
+  {
+    level: 'Level 1',
+    offering: 'Personal Cybersecurity Essentials',
+    path: 'Personal protection',
+    relationship: 'Foundation',
+    format: 'One-time',
+    prices: ['$199'],
+  },
+  {
+    level: 'Level 2',
+    offering: 'Account, Identity & Privacy Protection',
+    path: 'Personal protection',
+    relationship: 'Includes Level 1',
+    format: 'One-time',
+    prices: ['$995'],
+  },
+  {
+    level: 'Level 3',
+    offering: 'Home & Identity Exposure Review',
+    path: 'Personal protection',
+    relationship: 'Includes Levels 1–2',
+    format: 'One-time',
+    prices: ['$1,995'],
+  },
+  {
+    level: 'Care',
+    offering: 'Personal Protection Care',
+    path: 'Personal protection',
+    relationship: 'Requires Level 2 or 3',
+    format: 'Subscription',
+    prices: ['$89 per month — individual', '$129 per month — home'],
+  },
+  {
+    level: 'Level 4',
+    offering: 'Secure Home Network Deployment',
+    path: 'Home network',
+    relationship: 'Foundation',
+    format: 'One-time',
+    prices: ['From $2,995'],
+  },
+  {
+    level: 'Level 5',
+    offering: 'Ongoing Home Security Care',
+    path: 'Home network',
+    relationship: 'Requires Level 4',
+    format: 'Quarterly or weekly',
+    prices: ['$99 per month — quarterly', '$249 per month — weekly'],
+  },
 ];
 ---
 
@@ -62,21 +104,30 @@ const overviewRows = [
     <p class="eyebrow">Service guide</p>
     <h2 id="guide-heading">How each offering fits.</h2>
     <div class="service-table-wrap">
-      <table>
+      <table
+        aria-label="VoraSec service levels, prerequisites, delivery formats, and baseline prices"
+        aria-describedby="service-pricing-note"
+      >
         <thead>
           <tr>
             <th scope="col">Level</th>
             <th scope="col">Offering</th>
+            <th scope="col">Baseline price</th>
             <th scope="col">Path</th>
             <th scope="col">Relationship</th>
             <th scope="col">Format</th>
           </tr>
         </thead>
         <tbody>
-          {overviewRows.map(([level, offering, path, relationship, format]) => (
+          {overviewRows.map(({ level, offering, path, relationship, format, prices }) => (
             <tr>
               <td data-label="Level">{level}</td>
               <th scope="row" data-label="Offering">{offering}</th>
+              <td class="price-cell" data-label="Baseline price">
+                <div class="price-values">
+                  {prices.map((price) => <span>{price}</span>)}
+                </div>
+              </td>
               <td data-label="Path">{path}</td>
               <td data-label="Relationship">{relationship}</td>
               <td data-label="Format">{format}</td>
@@ -85,10 +136,13 @@ const overviewRows = [
         </tbody>
       </table>
     </div>
-    <p class="table-note">
+    <p class="table-note" id="service-pricing-note">
       Personal Protection Care and Ongoing Home Security Care are separate
       subscriptions. Clients may choose either or both after completing the
-      corresponding prerequisite service.
+      corresponding prerequisite service. Levels 2 and 3 include the lower-level
+      services in their listed price. One-time prices reflect the baseline scope.
+      Any additional scope, hardware, cabling, electrical work, travel, or
+      third-party subscriptions will be confirmed before work begins.
     </p>
   </section>
 
@@ -150,6 +204,7 @@ const overviewRows = [
 
   table {
     width: 100%;
+    min-width: 960px;
     border-collapse: collapse;
     text-align: left;
   }
@@ -171,6 +226,20 @@ const overviewRows = [
     font-size: 0.78rem;
     letter-spacing: 0.1em;
     text-transform: uppercase;
+  }
+
+  .price-cell {
+    color: var(--text);
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .price-cell span {
+    display: block;
+  }
+
+  .price-cell span + span {
+    margin-top: 0.35rem;
   }
 
   .table-note {
@@ -209,6 +278,7 @@ const overviewRows = [
     td {
       display: block;
       width: 100%;
+      min-width: 0;
     }
 
     tbody tr {
@@ -233,6 +303,17 @@ const overviewRows = [
       font-weight: 700;
       letter-spacing: 0.08em;
       text-transform: uppercase;
+    }
+
+    .price-cell {
+      white-space: normal;
+    }
+  }
+
+  @media (max-width: 420px) {
+    tbody th,
+    tbody td {
+      grid-template-columns: 6.25rem 1fr;
     }
   }
 </style>

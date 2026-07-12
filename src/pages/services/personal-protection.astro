@@ -9,6 +9,7 @@ const personalLevels = [
     id: 'level-1',
     level: 'Level 1',
     title: 'Personal Cybersecurity Essentials',
+    price: '$199',
     tagline: 'Learn the essentials and put them into practice.',
     text: 'A private 60-minute education and guided setup session designed around your actual accounts, devices, and concerns.',
     included: [
@@ -26,6 +27,7 @@ const personalLevels = [
     id: 'level-2',
     level: 'Level 2',
     title: 'Account, Identity & Privacy Protection',
+    price: '$995',
     tagline: 'Secure the accounts that matter most and reduce unnecessary exposure.',
     text: 'Includes everything in Level 1, followed by hands-on protection of your priority accounts, identity, and privacy.',
     included: [
@@ -44,6 +46,7 @@ const personalLevels = [
     id: 'level-3',
     level: 'Level 3',
     title: 'Home & Identity Exposure Review',
+    price: '$1,995',
     tagline: 'See what hackers can find before it becomes a problem.',
     text: 'Includes everything in Levels 1 and 2, plus an authorized review of your home-internet and identity exposure.',
     included: [
@@ -83,7 +86,11 @@ const personalLevels = [
     <div class="track-heading">
       <p class="eyebrow">Levels 1–3</p>
       <h2 id="personal-heading">Protection that builds from a clear foundation.</h2>
-      <p>Choose the level where you want to finish. Every higher level includes the work below it.</p>
+      <p>
+        Choose the level where you want to finish. Every higher level includes the
+        work below it. Prices shown are package totals, so Levels 2 and 3 already
+        include the lower levels in their listed price.
+      </p>
     </div>
 
     <div class="service-list">
@@ -92,7 +99,13 @@ const personalLevels = [
           <div class="service-heading">
             <p class="service-level">{service.level}</p>
             <div>
-              <h3>{service.title}</h3>
+              <div class="service-title-row">
+                <h3>{service.title}</h3>
+                <p class="service-price">
+                  <span>{service.price}</span>
+                  <small>One-time package</small>
+                </p>
+              </div>
               <p class="tagline">{service.tagline}</p>
             </div>
           </div>
@@ -115,6 +128,16 @@ const personalLevels = [
       <div>
         <p class="service-level">Ongoing care</p>
         <h3>Personal Protection Care</h3>
+        <div class="care-pricing" aria-label="Personal Protection Care pricing">
+          <p>
+            <span>Individual</span>
+            <strong>$89</strong><small> per month</small>
+          </p>
+          <p>
+            <span>Home</span>
+            <strong>$129</strong><small> per month</small>
+          </p>
+        </div>
         <p class="tagline">Ongoing help when something online does not feel right.</p>
       </div>
       <div>
@@ -180,6 +203,40 @@ const personalLevels = [
     font-size: clamp(1.7rem, 3.4vw, 2.45rem);
   }
 
+  .service-title-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1.25rem;
+  }
+
+  .service-price {
+    flex: 0 0 auto;
+    margin: 0.1rem 0 0;
+    padding-left: 0.75rem;
+    border-left: 2px solid var(--b);
+    color: var(--text);
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .service-price span {
+    display: block;
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .service-price small {
+    display: block;
+    margin-top: 0.35rem;
+    color: var(--muted);
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
   .service-level {
     margin: 0.15rem 0 0;
     color: var(--b);
@@ -237,6 +294,39 @@ const personalLevels = [
     background: rgba(115, 214, 232, 0.035);
   }
 
+  .care-pricing {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.75rem;
+    margin-top: 1.1rem;
+  }
+
+  .care-pricing p {
+    margin: 0;
+    padding: 0.75rem;
+    border: 1px solid var(--line);
+  }
+
+  .care-pricing span {
+    display: block;
+    margin-bottom: 0.35rem;
+    color: var(--muted);
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  .care-pricing strong {
+    color: var(--text);
+    font-size: 1.25rem;
+  }
+
+  .care-pricing small {
+    color: var(--muted);
+    font-size: 0.72rem;
+  }
+
   .cross-link {
     max-width: 820px;
     margin-left: max(1.25rem, calc((100vw - var(--max)) / 2));
@@ -256,6 +346,16 @@ const personalLevels = [
     .service-heading {
       grid-template-columns: 1fr;
       gap: 0.5rem;
+    }
+
+    .service-title-row {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    .service-price {
+      text-align: left;
     }
   }
 </style>
