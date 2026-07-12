@@ -12,7 +12,7 @@ const ALLOWED_INTERESTS = new Set([
   'Level 3 - Home and Identity Exposure Review',
   'Personal Protection Care',
   'Level 4 - Secure Home Network Deployment',
-  'Level 5 - Ongoing Home Security Care',
+  'Care - Ongoing Home Security Care',
   'Group Cybersecurity Education',
   'Digital Legacy Planning Upgrade',
   'Current Client - Scam Concierge',
