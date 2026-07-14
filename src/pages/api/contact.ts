@@ -14,7 +14,6 @@ const ALLOWED_INTERESTS = new Set([
   'Level 4 - Secure Home Network Deployment',
   'Care - Ongoing Home Security Care',
   'Group Cybersecurity Education',
-  'Digital Legacy Planning Upgrade',
   'Current Client - Scam Concierge',
   'Current Client - Breached or Compromised Account',
   'Current Client - Home Network Support',
