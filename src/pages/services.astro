@@ -6,50 +6,50 @@ export const prerender = false;
 
 const overviewRows = [
   {
-    level: 'Level 1',
-    offering: 'Personal Cybersecurity Essentials',
+    service: 'Essentials',
+    descriptor: 'A private education and guided-setup session built around your accounts, devices, and concerns.',
     path: 'Personal protection',
-    relationship: 'Foundation',
+    relationship: 'Most families start here',
     format: 'One-time',
     prices: ['$199'],
   },
   {
-    level: 'Level 2',
-    offering: 'Account, Identity & Privacy Protection',
+    service: 'Account Protection',
+    descriptor: 'Hands-on protection for the accounts, identity, and privacy that matter most.',
     path: 'Personal protection',
-    relationship: 'Includes Level 1',
+    relationship: 'Account Protection includes Essentials.',
     format: 'One-time',
     prices: ['$995'],
   },
   {
-    level: 'Level 3',
-    offering: 'Home & Identity Exposure Review',
+    service: 'Exposure Review',
+    descriptor: 'An authorized review of what outsiders can find and reach — before it becomes a problem.',
     path: 'Personal protection',
-    relationship: 'Includes Levels 1–2',
+    relationship: 'Exposure Review includes Essentials and Account Protection.',
     format: 'One-time',
     prices: ['$1,995'],
   },
   {
-    level: 'Care',
-    offering: 'Personal Protection Care',
+    service: 'Personal Protection Care',
+    descriptor: 'Ongoing help when something online does not feel right.',
     path: 'Personal protection',
-    relationship: 'Requires Level 2 or 3',
+    relationship: 'Personal Protection Care is available after Account Protection or Exposure Review.',
     format: 'Monthly',
     prices: ['$89 per month — individual', '$129 per month — home'],
   },
   {
-    level: 'Level 4',
-    offering: 'Secure Home Network Deployment',
+    service: 'Network Deployment',
+    descriptor: 'A professionally configured UniFi home network, designed around your household and owned by you.',
     path: 'Home network',
-    relationship: 'Foundation',
+    relationship: 'Home Network foundation',
     format: 'One-time',
     prices: ['From $2,995'],
   },
   {
-    level: 'Care',
-    offering: 'Ongoing Home Security Care',
+    service: 'Ongoing Home Security Care',
+    descriptor: 'Continued professional attention without managing network security yourself.',
     path: 'Home network',
-    relationship: 'Requires Level 4',
+    relationship: 'Ongoing Home Security Care is available after Network Deployment.',
     format: 'Quarterly or weekly',
     prices: ['$99 per month — quarterly', '$249 per month — weekly'],
   },
@@ -82,23 +82,34 @@ const overviewRows = [
         <p class="path-label">Personal Protection</p>
         <h3>Accounts, identity, privacy, and scam support.</h3>
         <p>
-          Levels 1–3 build on one another. Level 2 includes Level 1, and Level 3
-          includes Levels 1 and 2. Personal Protection Care is available after
-          Level 2 or 3 establishes a secure baseline.
+          Most families start with Essentials. Account Protection includes
+          Essentials, while Exposure Review includes both. Personal Protection
+          Care is available after Account Protection or Exposure Review.
         </p>
+        <h4>Account Protection</h4>
+        <p>Hands-on protection for the accounts, identity, and privacy that matter most.</p>
+        <h5>Included</h5>
         <ul class="path-details">
-          <li>One-year subscription to a professional data-broker removal service included ($129 value) — set up together during your session, with the account and subscription in your name</li>
+          <li>Password-manager setup and organization</li>
+          <li>Unique passwords and two-step verification for your primary email, your password manager, and two more priority accounts you choose</li>
+          <li>Review of recovery email addresses, phone numbers, trusted devices, and active sessions</li>
+          <li>Secure organization of recovery codes</li>
+          <li>Guided review of social-media and personal-information privacy settings</li>
+          <li><a href="/removal">One-year subscription to a professional data-broker removal service included ($129 value) — set up together during your session, with the account and subscription in your name</a></li>
           <li>Hands-on privacy training: reading your removal reports, cleaning up Google results about you, handling the sites that require you personally, and a recheck routine so exposure doesn't creep back</li>
-          <li>Free 30-day trial of Personal Protection Care with breach monitoring and up to 4 Scam Concierge reviews — no automatic billing</li>
+          <li>A Family Scam Defense Plan with trusted contacts, a family verification phrase, and rules for unusual financial requests</li>
+          <li>A free 30-day trial of Personal Protection Care — breach monitoring and up to 4 Scam Concierge reviews, with no automatic billing</li>
         </ul>
+        <p class="best-for"><strong>Best for:</strong> Individuals and families who want important accounts secured and public exposure reduced.</p>
         <a class="button" href="/services/personal-protection">View full Personal Protection details</a>
       </article>
       <article>
         <p class="path-label">Home Network Protection</p>
         <h3>A professionally secured foundation for connected homes.</h3>
         <p>
-          Level 4 establishes a professionally configured home network. Care
-          provides optional ongoing support and is available after Level 4.
+          Network Deployment is the separate Home Network foundation. Ongoing Home
+          Security Care provides optional support afterward and is available after
+          Network Deployment.
         </p>
         <a class="button" href="/services/home-network-protection">View full Home Network details</a>
       </article>
@@ -110,13 +121,12 @@ const overviewRows = [
     <h2 id="guide-heading">How each offering fits.</h2>
     <div class="service-table-wrap">
       <table
-        aria-label="VoraSec service levels, prerequisites, delivery formats, and baseline prices"
+        aria-label="VoraSec services, prerequisites, delivery formats, and baseline prices"
         aria-describedby="service-pricing-note"
       >
         <thead>
           <tr>
-            <th scope="col">Level</th>
-            <th scope="col">Offering</th>
+            <th scope="col">Service</th>
             <th scope="col">Baseline price</th>
             <th scope="col">Path</th>
             <th scope="col">Relationship</th>
@@ -124,10 +134,12 @@ const overviewRows = [
           </tr>
         </thead>
         <tbody>
-          {overviewRows.map(({ level, offering, path, relationship, format, prices }) => (
+          {overviewRows.map(({ service, descriptor, path, relationship, format, prices }) => (
             <tr>
-              <td data-label="Level">{level}</td>
-              <th scope="row" data-label="Offering">{offering}</th>
+              <th class="service-name" scope="row" data-label="Service">
+                <span>{service}</span>
+                <small>{descriptor}</small>
+              </th>
               <td class="price-cell" data-label="Baseline price">
                 <div class="price-values">
                   {prices.map((price) => <span>{price}</span>)}
@@ -144,11 +156,12 @@ const overviewRows = [
     <p class="table-note" id="service-pricing-note">
       Personal Protection Care and Ongoing Home Security Care are separate
       subscriptions. Clients may choose either or both after completing the
-      corresponding prerequisite service. Levels 2 and 3 include the lower-level
-      services in their listed price. One-time prices reflect the baseline scope.
-      Any additional scope, hardware, cabling, electrical work, travel, or
-      third-party subscriptions beyond the one-year removal service included with
-      Level 2 will be confirmed before work begins.
+      corresponding prerequisite service. Account Protection includes Essentials,
+      and Exposure Review includes Essentials and Account Protection. Network
+      Deployment is the separate Home Network foundation. One-time prices reflect
+      the baseline scope. Any additional scope, hardware, cabling, electrical work,
+      travel, or third-party subscriptions beyond the <a href="/removal">one-year removal service</a>
+      included with Account Protection will be confirmed before work begins.
     </p>
   </section>
 
@@ -195,6 +208,20 @@ const overviewRows = [
     font-size: clamp(1.5rem, 3vw, 2rem);
   }
 
+  .path-summary h4 {
+    margin: 2rem 0 0.35rem;
+    color: var(--text);
+    font-size: 1.15rem;
+  }
+
+  .path-summary h5 {
+    margin: 1.5rem 0 0.55rem;
+    color: var(--text);
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
   .path-details {
     margin: 1rem 0 1.5rem;
     padding-left: 1.2rem;
@@ -203,6 +230,16 @@ const overviewRows = [
 
   .path-details li + li {
     margin-top: 0.65rem;
+  }
+
+  .best-for {
+    margin: 1.5rem 0;
+    padding-left: 1rem;
+    border-left: 1px solid var(--line);
+  }
+
+  .best-for strong {
+    color: var(--text);
   }
 
   .path-label {
@@ -236,6 +273,19 @@ const overviewRows = [
   thead th,
   tbody th {
     color: var(--text);
+  }
+
+  .service-name span,
+  .service-name small {
+    display: block;
+  }
+
+  .service-name small {
+    margin-top: 0.35rem;
+    color: var(--muted);
+    font-size: 0.78rem;
+    font-weight: 400;
+    line-height: 1.45;
   }
 
   thead th {

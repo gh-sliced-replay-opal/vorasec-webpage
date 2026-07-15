@@ -1,0 +1,104 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Free Cybersecurity Protections & Resources | VoraSec"
+  description="Free, trusted cybersecurity resources for credit freezes, breach checks, privacy, fraud recovery, safer accounts, devices, and home networks."
+>
+  <article class="prose resources-page">
+    <h1>Free Protections & Resources</h1>
+    <p class="lede">
+      Most of the strongest protections available to you are free — they just take time, sequencing, and follow-through. These are the resources we point every client to. Our services exist for everything these can't do on their own.
+    </p>
+
+    <p class="referral-disclosure"><em>Some links on this page are referral links, which may earn VoraSec a commission at no cost to you. It never changes what we recommend.</em></p>
+
+    <section>
+      <h2>Freeze your credit — free, and the single best defense against identity theft</h2>
+      <p>
+        Freezing your credit at all four bureaus takes about 20 minutes and blocks most fraudulent loans and accounts before they can open. You can unfreeze anytime, instantly.
+      </p>
+      <ul class="resource-links">
+        <li><a href="https://www.equifax.com/personal/credit-report-services/credit-freeze/">Equifax</a></li>
+        <li><a href="https://www.experian.com/freeze">Experian</a></li>
+        <li><a href="https://www.transunion.com/credit-freeze">TransUnion</a></li>
+        <li><a href="https://www.innovis.com/securityFreeze">Innovis</a> — the fourth bureau most people miss</li>
+      </ul>
+      <p>
+        Once a year, pull your free reports at <a href="https://www.annualcreditreport.com/">AnnualCreditReport.com</a>, the only federally authorized source. We guide clients through placing freezes — with you entering and keeping all sensitive information — in every Essentials session.
+      </p>
+    </section>
+
+    <section>
+      <h2>Check your exposure</h2>
+      <p><strong><a href="https://haveibeenpwned.com/">Have I Been Pwned</a></strong> — enter your email and see which known data breaches included your information. Free, run by a respected security researcher. We run deeper checks in Exposure Review and monitor continuously in Personal Protection Care.</p>
+      <p><strong><a href="https://myactivity.google.com/results-about-you">Google "Results about you"</a></strong> — Google's own tool for requesting removal of your phone number and home address from search results. Free, and worth doing this week.</p>
+    </section>
+
+    <section>
+      <h2>Take your data back</h2>
+      <p>
+        People-search and data-broker sites republish your address, phone number, relatives, and history to anyone who looks. A <strong>professional data-broker removal service</strong> (about $129/year) submits and re-submits opt-outs on your behalf across hundreds of these sites — <a href="https://vorasec.com/removal">our recommended service is here</a>. A first-year subscription is included with our Account Protection service, where we also train you on what removal services can't reach.
+      </p>
+    </section>
+
+    <section>
+      <h2>If something has already gone wrong</h2>
+      <ul class="resource-links">
+        <li><strong><a href="https://www.identitytheft.gov/">IdentityTheft.gov</a></strong> — the FTC's step-by-step recovery plan for identity misuse</li>
+        <li><strong><a href="https://reportfraud.ftc.gov/">ReportFraud.ftc.gov</a></strong> — report scams and fraud attempts</li>
+        <li><strong><a href="https://www.ic3.gov/">IC3.gov</a></strong> — the FBI's portal for internet crime and online financial fraud</li>
+        <li><strong><a href="https://www.donotcall.gov/">DoNotCall.gov</a></strong> — the national Do Not Call registry</li>
+      </ul>
+      <p>
+        If an account is compromised, money moved, or you're not sure how bad it is — <a href="/services#contact">contact us</a> before you start clicking. A calm second opinion in the first hour prevents most of the damage.
+      </p>
+    </section>
+
+    <section>
+      <h2>Everything else — passwords, two-step verification, devices, your home network</h2>
+      <p>
+        The tools matter less than the setup, the order, and the follow-through — and recommendations without context are how people end up with the wrong thing configured the wrong way. Our clients receive our full, personalized tool recommendations and hands-on setup as part of every service. <a href="/services">See which service fits →</a>
+      </p>
+      <p><em>Not sure where to start? <a href="/services#contact">Start a conversation</a> — recommending the smallest thing that solves the problem is the whole point.</em></p>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .resources-page {
+    width: min(calc(100% - 2.5rem), 860px);
+  }
+
+  .lede {
+    max-width: 760px;
+    color: var(--text);
+    font-size: 1.12rem;
+  }
+
+  .referral-disclosure {
+    margin: 2.5rem 0 4rem;
+    padding: 1rem 1.2rem;
+    border-left: 2px solid var(--b);
+    background: rgba(167, 240, 207, 0.035);
+    font-size: 0.9rem;
+  }
+
+  section {
+    padding-top: 1rem;
+  }
+
+  section + section {
+    margin-top: 2.5rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .resource-links {
+    padding-left: 1.25rem;
+  }
+
+  .resource-links li + li {
+    margin-top: 0.6rem;
+  }
+</style>

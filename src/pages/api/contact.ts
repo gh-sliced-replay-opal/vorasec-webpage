@@ -7,12 +7,12 @@ const CONTACT_FROM = 'website@forms.vorasec.com';
 const TEST_SECRET_KEY = '1x0000000000000000000000000000000AA';
 const ALLOWED_INTERESTS = new Set([
   'Help me choose',
-  'Level 1 - Personal Cybersecurity Essentials',
-  'Level 2 - Account, Identity and Privacy Protection',
-  'Level 3 - Home and Identity Exposure Review',
+  'Essentials',
+  'Account Protection',
+  'Exposure Review',
   'Personal Protection Care',
-  'Level 4 - Secure Home Network Deployment',
-  'Care - Ongoing Home Security Care',
+  'Network Deployment',
+  'Ongoing Home Security Care',
   'Group Cybersecurity Education',
   'Current Client - Scam Concierge',
   'Current Client - Breached or Compromised Account',

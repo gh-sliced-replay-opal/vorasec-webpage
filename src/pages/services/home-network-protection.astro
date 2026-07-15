@@ -6,8 +6,8 @@ export const prerender = false;
 ---
 
 <BaseLayout
-  title="Home Network Protection Services | VoraSec"
-  description="Secure UniFi home-network design, deployment, and ongoing professional care for connected households."
+  title="Network Deployment & Home Security Care | VoraSec"
+  description="Professional UniFi home-network deployment and ongoing security care for connected households, with client-owned equipment, accounts, and configuration."
 >
   <section class="hero shell network-hero">
     <p class="eyebrow">Home Network Protection</p>
@@ -18,31 +18,30 @@ export const prerender = false;
       themselves.
     </p>
     <div class="buttons">
-      <a class="button primary" href="#level-4">Explore network services</a>
+      <a class="button primary" href="#network-deployment">Explore network services</a>
       <a class="button" href="#contact">Talk with VoraSec</a>
     </div>
   </section>
 
   <section class="section shell service-track" aria-labelledby="network-heading">
     <div class="track-heading">
-      <p class="eyebrow">Level 4 & ongoing care</p>
+      <p class="eyebrow">Network deployment & ongoing care</p>
       <h2 id="network-heading">Build the network, then choose whether we maintain it.</h2>
-      <p>Level 4 establishes the secure foundation. Care is an optional subscription available afterward.</p>
+      <p>Network Deployment establishes the Home Network foundation. Ongoing Home Security Care is an optional subscription available afterward.</p>
     </div>
 
     <div class="service-list">
-      <article class="service-block" id="level-4">
+      <article class="service-block" id="network-deployment">
         <div class="service-heading">
-          <p class="service-level">Level 4</p>
           <div>
             <div class="service-title-row">
-              <h3>Secure Home Network Deployment</h3>
+              <h3>Network Deployment</h3>
               <p class="service-price">
                 <span>$2,995</span>
                 <small>Professional services from</small>
               </p>
             </div>
-            <p class="tagline">A professionally configured network designed around your household.</p>
+            <p class="tagline">A professionally configured UniFi home network, designed around your household and owned by you.</p>
           </div>
         </div>
         <div class="service-body">
@@ -81,8 +80,9 @@ export const prerender = false;
         </div>
         <div class="service-body care-options">
           <p>
-            Available after Level 4. Choose a quarterly or weekly review cadence;
-            both are monthly subscriptions.
+            Ongoing Home Security Care is available after Network Deployment.
+            Choose a quarterly or weekly review cadence; both are monthly
+            subscriptions.
           </p>
           <div>
             <section>
@@ -153,9 +153,6 @@ export const prerender = false;
   }
 
   .service-heading {
-    display: grid;
-    grid-template-columns: 5rem 1fr;
-    gap: 1.2rem;
     align-content: start;
   }
 
@@ -282,11 +279,6 @@ export const prerender = false;
     .care-options > div {
       grid-template-columns: 1fr;
       gap: 2.5rem;
-    }
-
-    .service-heading {
-      grid-template-columns: 1fr;
-      gap: 0.5rem;
     }
 
     .service-title-row {

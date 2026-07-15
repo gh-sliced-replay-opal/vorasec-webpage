@@ -4,14 +4,15 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
 export const prerender = false;
 
-const personalLevels = [
+const removalSubscriptionBenefit = 'One-year subscription to a professional data-broker removal service included ($129 value) — set up together during your session, with the account and subscription in your name';
+
+const personalServices = [
   {
-    id: 'level-1',
-    level: 'Level 1',
-    title: 'Personal Cybersecurity Essentials',
+    id: 'essentials',
+    name: 'Essentials',
     price: '$199',
-    tagline: 'Learn the essentials and put them into practice.',
-    text: 'A private 60-minute education and guided setup session designed around your actual accounts, devices, and concerns.',
+    descriptor: 'A private education and guided-setup session built around your accounts, devices, and concerns.',
+    relationship: 'Most families start here.',
     included: [
       'Recognizing scams, phishing, fraudulent calls, and urgent payment requests',
       'Safer passwords, two-step verification, account recovery, updates, and backups',
@@ -24,19 +25,18 @@ const personalLevels = [
     bestFor: 'Anyone who wants practical guidance and a stronger personal-security foundation.',
   },
   {
-    id: 'level-2',
-    level: 'Level 2',
-    title: 'Account, Identity & Privacy Protection',
+    id: 'account-protection',
+    name: 'Account Protection',
     price: '$995',
-    tagline: 'Secure the accounts that matter most and reduce unnecessary exposure.',
-    text: 'Includes everything in Level 1, followed by hands-on protection of your priority accounts, identity, and privacy.',
+    descriptor: 'Hands-on protection for the accounts, identity, and privacy that matter most.',
+    relationship: 'Account Protection includes Essentials.',
     included: [
       'Password-manager setup and organization',
       'Unique passwords and two-step verification for your primary email, your password manager, and two more priority accounts you choose',
       'Review of recovery email addresses, phone numbers, trusted devices, and active sessions',
       'Secure organization of recovery codes',
       'Guided review of social-media and personal-information privacy settings',
-      'One-year subscription to a professional data-broker removal service included ($129 value) — set up together during your session, with the account and subscription in your name',
+      removalSubscriptionBenefit,
       'Hands-on privacy training: reading your removal reports, cleaning up Google results about you, handling the sites that require you personally, and a recheck routine so exposure doesn\'t creep back',
       'A Family Scam Defense Plan with trusted contacts, a family verification phrase, and rules for unusual financial requests',
       'A free 30-day trial of Personal Protection Care — breach monitoring and up to 4 Scam Concierge reviews, with no automatic billing',
@@ -44,12 +44,11 @@ const personalLevels = [
     bestFor: 'Individuals and families who want important accounts secured and public exposure reduced.',
   },
   {
-    id: 'level-3',
-    level: 'Level 3',
-    title: 'Home & Identity Exposure Review',
+    id: 'exposure-review',
+    name: 'Exposure Review',
     price: '$1,995',
-    tagline: 'See what hackers can find before it becomes a problem.',
-    text: 'Includes everything in Levels 1 and 2, plus an authorized review of your home-internet and identity exposure.',
+    descriptor: 'An authorized review of what outsiders can find and reach — before it becomes a problem.',
+    relationship: 'Exposure Review includes Essentials and Account Protection.',
     included: [
       'Authorized inspection of the home internet connection from outside the network',
       'Identification of exposed cameras, storage devices, router controls, remote-access tools, and administrative pages',
@@ -65,55 +64,58 @@ const personalLevels = [
 ---
 
 <BaseLayout
-  title="Personal Protection Services | VoraSec"
-  description="Stackable personal cybersecurity services for account security, identity and privacy protection, exposure reviews, scam support, and ongoing care."
+  title="Account Protection & Exposure Review — Personal Cybersecurity | VoraSec"
+  description="Personal cybersecurity education, hands-on account and privacy protection, authorized exposure reviews, scam support, and ongoing care for individuals and families."
 >
   <section class="hero shell protection-hero">
     <p class="eyebrow">Personal Protection</p>
     <h1>Protect your accounts, identity, and privacy.</h1>
     <p>
-      Begin with practical education, add hands-on protection, and continue as far
-      as your needs require. Level 2 includes Level 1, and Level 3 includes both
-      levels below it.
+      Most families start with Essentials. If you want us hands-on with your
+      accounts, choose Account Protection. Exposure Review adds an authorized look
+      at what outsiders can find and reach.
     </p>
     <div class="buttons">
-      <a class="button primary" href="#level-1">Explore the levels</a>
+      <a class="button primary" href="#essentials">Explore the services</a>
       <a class="button" href="#contact">Talk with VoraSec</a>
     </div>
   </section>
 
   <section class="section shell service-track" aria-labelledby="personal-heading">
     <div class="track-heading">
-      <p class="eyebrow">Levels 1–3</p>
+      <p class="eyebrow">Personal services</p>
       <h2 id="personal-heading">Protection that builds from a clear foundation.</h2>
       <p>
-        Choose the level where you want to finish. Every higher level includes the
-        work below it. Prices shown are package totals, so Levels 2 and 3 already
-        include the lower levels in their listed price.
+        Account Protection includes Essentials. Exposure Review includes Essentials
+        and Account Protection. Prices shown are package totals, so the included
+        work is already reflected in each price.
       </p>
     </div>
 
     <div class="service-list">
-      {personalLevels.map((service) => (
+      {personalServices.map((service) => (
         <article class="service-block" id={service.id}>
           <div class="service-heading">
-            <p class="service-level">{service.level}</p>
-            <div>
-              <div class="service-title-row">
-                <h3>{service.title}</h3>
-                <p class="service-price">
-                  <span>{service.price}</span>
-                  <small>One-time package</small>
-                </p>
-              </div>
-              <p class="tagline">{service.tagline}</p>
+            <div class="service-title-row">
+              <h3>{service.name}</h3>
+              <p class="service-price">
+                <span>{service.price}</span>
+                <small>One-time package</small>
+              </p>
             </div>
+            <p class="tagline">{service.descriptor}</p>
           </div>
           <div class="service-body">
-            <p>{service.text}</p>
+            <p>{service.relationship}</p>
             <h4>Included</h4>
             <ul>
-              {service.included.map((item) => <li>{item}</li>)}
+              {service.included.map((item) => (
+                <li>
+                  {item === removalSubscriptionBenefit
+                    ? <a href="/removal">{item}</a>
+                    : item}
+                </li>
+              ))}
             </ul>
             {service.addOn && (
               <p class="add-on"><strong>Optional add-on:</strong> {service.addOn}</p>
@@ -142,8 +144,9 @@ const personalLevels = [
       </div>
       <div>
         <p>
-          Available after Level 2 or Level 3 has established a secure baseline for
-          your accounts, identity, and privacy.
+          Personal Protection Care is available after Account Protection or Exposure
+          Review has established a secure baseline for your accounts, identity, and
+          privacy.
         </p>
         <h4>Included</h4>
         <ul>
@@ -192,9 +195,6 @@ const personalLevels = [
   }
 
   .service-heading {
-    display: grid;
-    grid-template-columns: 5rem 1fr;
-    gap: 1.2rem;
     align-content: start;
   }
 
@@ -342,11 +342,6 @@ const personalLevels = [
 
     .subscription-block {
       padding: 1.5rem;
-    }
-
-    .service-heading {
-      grid-template-columns: 1fr;
-      gap: 0.5rem;
     }
 
     .service-title-row {
