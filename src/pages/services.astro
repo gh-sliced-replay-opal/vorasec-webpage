@@ -78,41 +78,38 @@ const overviewRows = [
     <p class="eyebrow">Two paths</p>
     <h2 id="paths-heading">Choose the part of your digital life you want to protect.</h2>
     <div class="path-summary">
-      <article>
-        <p class="path-label">Personal Protection</p>
-        <h3>Accounts, identity, privacy, and scam support.</h3>
-        <p>
-          Most families start with Essentials. Account Protection includes
-          Essentials, while Exposure Review includes both. Personal Protection
-          Care is available after Account Protection or Exposure Review.
-        </p>
-        <h4>Account Protection</h4>
-        <p>Hands-on protection for the accounts, identity, and privacy that matter most.</p>
-        <h5>Included</h5>
-        <ul class="path-details">
-          <li>Password-manager setup and organization</li>
-          <li>Unique passwords and two-step verification for your primary email, your password manager, and two more priority accounts you choose</li>
-          <li>Review of recovery email addresses, phone numbers, trusted devices, and active sessions</li>
-          <li>Secure organization of recovery codes</li>
-          <li>Guided review of social-media and personal-information privacy settings</li>
-          <li><a href="/removal">One-year subscription to a professional data-broker removal service included ($129 value) — set up together during your session, with the account and subscription in your name</a></li>
-          <li>Hands-on privacy training: reading your removal reports, cleaning up Google results about you, handling the sites that require you personally, and a recheck routine so exposure doesn't creep back</li>
-          <li>A Family Scam Defense Plan with trusted contacts, a family verification phrase, and rules for unusual financial requests</li>
-          <li>A free 30-day trial of Personal Protection Care — breach monitoring and up to 4 Scam Concierge reviews, with no automatic billing</li>
-        </ul>
-        <p class="best-for"><strong>Best for:</strong> Individuals and families who want important accounts secured and public exposure reduced.</p>
-        <a class="button" href="/services/personal-protection">View full Personal Protection details</a>
-      </article>
-      <article>
-        <p class="path-label">Home Network Protection</p>
-        <h3>A professionally secured foundation for connected homes.</h3>
-        <p>
-          Network Deployment is the separate Home Network foundation. Ongoing Home
-          Security Care provides optional support afterward and is available after
-          Network Deployment.
-        </p>
-        <a class="button" href="/services/home-network-protection">View full Home Network details</a>
-      </article>
+      <a
+        class="path-card"
+        href="/services/personal-protection"
+        aria-label="Explore Personal Protection services"
+      >
+        <article>
+          <p class="path-label">Personal Protection</p>
+          <h3>Accounts, identity, privacy, and scam support.</h3>
+          <p>
+            Most families start with Essentials. Account Protection includes
+            Essentials, while Exposure Review includes both. Personal Protection
+            Care is available after Account Protection or Exposure Review.
+          </p>
+          <span class="path-cta" aria-hidden="true">View Personal Protection <span>→</span></span>
+        </article>
+      </a>
+      <a
+        class="path-card"
+        href="/services/home-network-protection"
+        aria-label="Explore Home Network Protection services"
+      >
+        <article>
+          <p class="path-label">Home Network Protection</p>
+          <h3>A professionally secured foundation for connected homes.</h3>
+          <p>
+            Network Deployment is the separate Home Network foundation. Ongoing Home
+            Security Care provides optional support afterward and is available after
+            Network Deployment.
+          </p>
+          <span class="path-cta" aria-hidden="true">View Home Network Protection <span>→</span></span>
+        </article>
+      </a>
     </div>
   </section>
 
@@ -198,48 +195,62 @@ const overviewRows = [
     margin-top: 3rem;
   }
 
-  .path-summary article {
+  .path-card {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .path-card article {
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
     padding: 2rem;
     border: 1px solid var(--line);
     background: rgba(255, 255, 255, 0.018);
+    transition:
+      border-color 160ms ease,
+      background-color 160ms ease,
+      transform 160ms ease;
   }
 
-  .path-summary h3 {
+  .path-card:hover article,
+  .path-card:focus-visible article {
+    border-color: var(--a);
+    background: rgba(255, 255, 255, 0.035);
+    transform: translateY(-2px);
+  }
+
+  .path-card:focus-visible {
+    outline: 2px solid var(--a);
+    outline-offset: 4px;
+  }
+
+  .path-card h3 {
     font-size: clamp(1.5rem, 3vw, 2rem);
   }
 
-  .path-summary h4 {
-    margin: 2rem 0 0.35rem;
+  .path-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: auto;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
     color: var(--text);
-    font-size: 1.15rem;
+    font-weight: 700;
   }
 
-  .path-summary h5 {
-    margin: 1.5rem 0 0.55rem;
-    color: var(--text);
-    font-size: 0.78rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+  .path-cta span {
+    color: var(--a);
+    font-size: 1.25rem;
+    transition: transform 160ms ease;
   }
 
-  .path-details {
-    margin: 1rem 0 1.5rem;
-    padding-left: 1.2rem;
-    color: var(--muted);
-  }
-
-  .path-details li + li {
-    margin-top: 0.65rem;
-  }
-
-  .best-for {
-    margin: 1.5rem 0;
-    padding-left: 1rem;
-    border-left: 1px solid var(--line);
-  }
-
-  .best-for strong {
-    color: var(--text);
+  .path-card:hover .path-cta span,
+  .path-card:focus-visible .path-cta span {
+    transform: translateX(0.25rem);
   }
 
   .path-label {
@@ -325,7 +336,7 @@ const overviewRows = [
       gap: 2.5rem;
     }
 
-    .path-summary article {
+    .path-card article {
       padding: 1.5rem;
     }
 
