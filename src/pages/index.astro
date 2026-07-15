@@ -78,37 +78,49 @@ const principles = [
     <p class="eyebrow">Two ways we protect your household</p>
     <h2 id="paths-heading">Start with the part of your digital life that needs attention.</h2>
     <div class="path-grid">
-      <article>
-        <p class="path-label">Personal protection</p>
-        <h3>Protect your accounts, identity, and privacy.</h3>
-        <p>
-          Most families start with Essentials. Account Protection adds hands-on
-          help with important accounts, identity, and privacy. Exposure Review adds
-          an authorized look at what outsiders can find and reach. Personal
-          Protection Care is available after Account Protection or Exposure Review.
-        </p>
-        <ul>
-          <li>Essentials</li>
-          <li>Account Protection</li>
-          <li>Exposure Review</li>
-          <li>Personal Protection Care</li>
-        </ul>
-        <a class="button" href="/services/personal-protection">Explore personal protection</a>
-      </article>
-      <article>
-        <p class="path-label">Home network protection</p>
-        <h3>Build a safer foundation for everything connected at home.</h3>
-        <p>
-          Network Deployment creates a professionally configured UniFi home network
-          designed around your household and owned by you. Ongoing Home Security
-          Care is available after Network Deployment.
-        </p>
-        <ul>
-          <li>Network Deployment</li>
-          <li>Ongoing Home Security Care</li>
-        </ul>
-        <a class="button" href="/services/home-network-protection">Explore home network protection</a>
-      </article>
+      <a
+        class="path-card"
+        href="/services/personal-protection"
+        aria-label="Explore Personal Protection services"
+      >
+        <article>
+          <p class="path-label">Personal protection</p>
+          <h3>Protect your accounts, identity, and privacy.</h3>
+          <p>
+            Most families start with Essentials. Account Protection adds hands-on
+            help with important accounts, identity, and privacy. Exposure Review adds
+            an authorized look at what outsiders can find and reach. Personal
+            Protection Care is available after Account Protection or Exposure Review.
+          </p>
+          <ul>
+            <li>Essentials</li>
+            <li>Account Protection</li>
+            <li>Exposure Review</li>
+            <li>Personal Protection Care</li>
+          </ul>
+          <span class="path-cta" aria-hidden="true">Explore Personal Protection <span>→</span></span>
+        </article>
+      </a>
+      <a
+        class="path-card"
+        href="/services/home-network-protection"
+        aria-label="Explore Home Network Protection services"
+      >
+        <article>
+          <p class="path-label">Home network protection</p>
+          <h3>Build a safer foundation for everything connected at home.</h3>
+          <p>
+            Network Deployment creates a professionally configured UniFi home network
+            designed around your household and owned by you. Ongoing Home Security
+            Care is available after Network Deployment.
+          </p>
+          <ul>
+            <li>Network Deployment</li>
+            <li>Ongoing Home Security Care</li>
+          </ul>
+          <span class="path-cta" aria-hidden="true">Explore Home Network Protection <span>→</span></span>
+        </article>
+      </a>
     </div>
   </section>
 
@@ -231,13 +243,38 @@ const principles = [
     margin-top: 3rem;
   }
 
-  .path-grid article {
+  .path-card {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .path-card article {
+    display: flex;
+    min-height: 100%;
+    flex-direction: column;
     padding: 2rem;
     border: 1px solid var(--line);
     background: rgba(255, 255, 255, 0.018);
+    transition:
+      border-color 160ms ease,
+      background-color 160ms ease,
+      transform 160ms ease;
   }
 
-  .path-grid h3 {
+  .path-card:hover article,
+  .path-card:focus-visible article {
+    border-color: var(--a);
+    background: rgba(255, 255, 255, 0.035);
+    transform: translateY(-2px);
+  }
+
+  .path-card:focus-visible {
+    outline: 2px solid var(--a);
+    outline-offset: 4px;
+  }
+
+  .path-card h3 {
     max-width: 420px;
     font-size: clamp(1.55rem, 3vw, 2.15rem);
   }
@@ -250,6 +287,29 @@ const principles = [
 
   .path-grid li {
     margin: 0.5rem 0;
+  }
+
+  .path-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: auto;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+    color: var(--text);
+    font-weight: 700;
+  }
+
+  .path-cta span {
+    color: var(--a);
+    font-size: 1.25rem;
+    transition: transform 160ms ease;
+  }
+
+  .path-card:hover .path-cta span,
+  .path-card:focus-visible .path-cta span {
+    transform: translateX(0.25rem);
   }
 
   .path-label {
@@ -301,7 +361,7 @@ const principles = [
       gap: 2.5rem;
     }
 
-    .path-grid article {
+    .path-card article {
       padding: 1.5rem;
     }
   }
